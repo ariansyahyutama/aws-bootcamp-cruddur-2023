@@ -13,6 +13,10 @@ source : https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?
 
 ![image](https://user-images.githubusercontent.com/67248935/218673193-2fa80591-9475-4717-adb2-13ca8317421e.png)
 
+## Add user on IAM
+
+![image](https://user-images.githubusercontent.com/67248935/218676966-fe2422cf-8858-4ee2-a639-728da1820ed6.png)
+
 
 
 
