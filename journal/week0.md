@@ -33,12 +33,12 @@ We'll create a SNS Topic
 ```sh
 aws sns create-topic --name billing-alarm
 ```
-which will return a TopicARN
+which will return a TopicARN for example "TopicArn": "arn:aws:sns:us-east-1:776552123053:billing-alarm"
 
 We'll create a subscription supply the TopicARN and our Email
 ```sh
 aws sns subscribe \
-    --topic-arn TopicARN \
+    --topic-arn "arn:aws:sns:us-east-1:776552123053:billing-alarm" \
     --protocol email \
     --notification-endpoint ghurafa2821@gmail.com
 ```
