@@ -45,6 +45,14 @@ aws sns subscribe \
 
 Check your email and confirm the subscription
 
+#### SNS
+
+<img width="882" alt="image" src="https://user-images.githubusercontent.com/67248935/218970382-17079fdc-0809-4f8b-95c7-86f57a70bf20.png">
+
+<img width="884" alt="image" src="https://user-images.githubusercontent.com/67248935/218970561-b3e6f560-c851-4afa-9224-b7610fece7af.png">
+
+
+
 #### Create Alarm
 
 - [aws cloudwatch put-metric-alarm](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html)
