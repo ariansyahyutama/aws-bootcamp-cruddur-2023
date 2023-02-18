@@ -2,7 +2,8 @@
 
 ## Architecture Diagram
 
-![Cloud Architecture (4)](https://user-images.githubusercontent.com/67248935/219820259-d85461d7-ecd1-4af4-b729-14a942a83af3.jpeg)
+![Cloud Architecture (5)](https://user-images.githubusercontent.com/67248935/219820447-2dff8a51-0566-4289-abad-c3277708b207.jpeg)
+
 
 
 source : 
