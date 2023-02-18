@@ -2,6 +2,9 @@
 
 ## Architecture Diagram
 
+I added CI/CD pipiline in the diagram, one of the function of the pipiline is to automate the deployment of ECS.
+I put API gatewat so the client in internet will communicate with the API gateway first, also I included the ACM for the certificate manager.
+
 ![Cloud Architecture (5)](https://user-images.githubusercontent.com/67248935/219820447-2dff8a51-0566-4289-abad-c3277708b207.jpeg)
 
 
@@ -64,6 +67,9 @@ Check your email and confirm the subscription
 ```sh
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
+
+![image](https://user-images.githubusercontent.com/67248935/219821757-d72cc97e-246c-4115-9824-0473d2efb5a0.png)
+
 
 ## Create an AWS Budget
 
