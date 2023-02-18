@@ -2,11 +2,11 @@
 
 ## Architecture Diagram
 
-![Cloud Architecture (3)](https://user-images.githubusercontent.com/67248935/218667247-eccfc8be-d910-4eb8-82fd-588fa505dc47.jpeg)
+![Cloud Architecture (4)](https://user-images.githubusercontent.com/67248935/219820259-d85461d7-ecd1-4af4-b729-14a942a83af3.jpeg)
 
 
-
-source : https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_loc=-2121%2C-97%2C3115%2C1616%2C0_0&invitationId=inv_1369f12b-7802-4162-a901-35cb4ae95af2
+source : 
+https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_loc=-3163%2C98%2C937%2C974%2C0_0&invitationId=inv_1369f12b-7802-4162-a901-35cb4ae95af2
 
 
 ## Budget Limit 
