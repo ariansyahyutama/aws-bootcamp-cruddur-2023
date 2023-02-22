@@ -80,6 +80,11 @@ docker build -t  backend-flask ./backend-flask
 Run 
 ```sh
 docker run --rm -p 4567:4567 -it backend-flask
+```
+
+Run 
+```sh
+docker run --rm -p 4567:4567 -it backend-flask
 FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
