@@ -97,7 +97,7 @@ unset BACKEND_URL="*"
 I prefer to use this command , define the env var in a command
 ```sh
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
-``
+```
 
 Run in background
 ```sh
