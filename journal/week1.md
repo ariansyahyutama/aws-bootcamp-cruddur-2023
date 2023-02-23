@@ -109,18 +109,6 @@ docker images
 docker image rm backend-flask --force
 ```
 
-> docker rmi backend-flask is the legacy syntax, you might see this is old docker tutorials and articles.
-
-> There are some cases where you need to use the --force
-
-### Overriding Ports
-
-```sh
-FLASK_ENV=production PORT=8080 docker run -p 4567:4567 -it backend-flask
-```
-
-> Look at Dockerfile to see how ${PORT} is interpolated
-
 ## Containerize Frontend
 
 ## Run NPM Install
@@ -163,7 +151,7 @@ docker run -p 3000:3000 -d frontend-react-js
 ## Multiple Containers
 
 > **Warning**
-> don't forget to run these command first, unless the frontend container will not be up, container port mark as down
+don't forget to run these command first, unless the frontend container will not be up, container port mark as down
 
 ```
 cd frontend-react-js
