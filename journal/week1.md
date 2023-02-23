@@ -43,7 +43,7 @@ got this Json file and it seems good
 <img width="843" alt="image" src="https://user-images.githubusercontent.com/67248935/220279244-94de7037-35ab-4f1d-82fc-1fab21d9fb86.png">
 
 
-*notes:
+*notes:*
 - make sure to unlock the port on the port tab
 - open the link for 4567 in your browser
 - append to the url to `/api/activities/home`
