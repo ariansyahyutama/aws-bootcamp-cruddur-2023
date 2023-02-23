@@ -28,7 +28,9 @@ pip install flask
 ```
 
 **follow all those above steps and but I got following error**
+<kbd>
 <img width="879" alt="image" src="https://user-images.githubusercontent.com/67248935/220278750-8f7d7803-8f40-49a9-b0ab-2cff8ea01601.png">
+</kbd>
 
 
 I configured following config 
