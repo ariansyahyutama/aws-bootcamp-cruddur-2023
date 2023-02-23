@@ -3,29 +3,19 @@
 ## local installation
 
 ### Install python version
-```
-pyenv install 3.10.9
-```
+`pyenv install 3.10.9`
 
 ### Set your python version
-```
-pyenv global 3.10.9
-```
+`pyenv global 3.10.9`
 
 ### Create virual environment
-```
-python -m venv venv
-```
+`python -m venv venv`
 
 ### Activate environment
-```
-source venv/bin/activate
-```
+`source venv/bin/activate`
 
 ### Install Flask
-```
-pip install flask
-```
+`pip install flask`
 
 **follow all those above steps and but I got following error**
 
@@ -34,10 +24,7 @@ pip install flask
 </kbd>
 
 
-I configured following config 
-```
-pip install -U flask-cors
-```
+I configured following config `pip install -U flask-cors`
 
 got this Json file and it's good now
 
