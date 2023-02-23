@@ -96,59 +96,12 @@ I prefer to use this command , define the env var in a command
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 ```
 
-Run in background
-```sh
-docker container run --rm -p 4567:4567 -d backend-flask
-```
-
-Return the container id into an Env Vat
-```sh
-CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
-```
-
-> docker container run is idiomatic, docker run is legacy syntax but is commonly used.
-
 ### Get Container Images or Running Container Ids
 
 ```
 docker ps
 docker images
 ```
-
-
-### Send Curl to Test Server
-
-```sh
-curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
-```
-
-### Check Container Logs
-
-```sh
-docker logs CONTAINER_ID -f
-docker logs backend-flask -f
-docker logs $CONTAINER_ID -f
-```
-
-###  Debugging  adjacent containers with other containers
-
-```sh
-docker run --rm -it curlimages/curl "-X GET http://localhost:4567/api/activities/home -H \"Accept: application/json\" -H \"Content-Type: application/json\""
-```
-
-busybosy is often used for debugging since it install a bunch of thing
-
-```sh
-docker run --rm -it busybosy
-```
-
-### Gain Access to a Container
-
-```sh
-docker exec CONTAINER_ID -it /bin/bash
-```
-
-> You can just right click a container and see logs in VSCode with Docker extension
 
 ### Delete an Image
 
