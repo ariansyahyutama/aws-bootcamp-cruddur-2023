@@ -162,7 +162,7 @@ docker run -p 3000:3000 -d frontend-react-js
 
 ## Multiple Containers
 
-> **warning**
+> **Warning**
 > don't forget to run these command first, unless the frontend container will not be up
 ```
 cd frontend-react-js
