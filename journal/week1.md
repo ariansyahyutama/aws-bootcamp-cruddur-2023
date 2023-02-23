@@ -1,6 +1,6 @@
 # Week 1 — App Containerization
 
-## local installation
+<u> Local Installation </u>
 
 ### Install python version
 `pyenv install 3.10.9`
@@ -24,7 +24,8 @@
 </kbd>
 
 
-I configured following config `pip install -U flask-cors`
+I configured following config 
+`pip install -U flask-cors`
 
 got this Json file and it's good now
 
