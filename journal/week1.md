@@ -73,12 +73,12 @@ the output of below command will be an error, because no env var is defined
 docker run --rm -p 4567:4567 -it backend-flask
 ```
 
-option-1
+#### option-1
 ```sh
 FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask
 ```
 
-option-2
+#### option-2
 ```
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
@@ -91,7 +91,7 @@ unset FRONTEND_URL="*"
 unset BACKEND_URL="*"
 ```
 
-I prefer to use this command , define the env var in a command
+#### option-3 , I prefer to use this command , define the env var in a command
 ```sh
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
 ```
