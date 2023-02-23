@@ -202,6 +202,7 @@ networks:
     driver: bridge
     name: cruddur
 ```
+we can bring up the compose by doing right click on the docker-compose.yml or can type `docker-compose up` in the terminal
 
 ## Adding DynamoDB Local and Postgres
 
