@@ -10,6 +10,8 @@
 - Launch an EC2 instance that has docker installed, and pull a container to demonstrate you can run your own docker processes.
 
 
+## Self Testing 
+
 ## <ins> Local Installation </ins>
 
 ### Install python version
@@ -204,10 +206,7 @@ we can bring up the compose by doing right click on the **docker-compose.yml** a
 
 ## Adding DynamoDB Local and Postgres
 
-We are going to use Postgres and DynamoDB local in future labs
-We can bring them in as containers and reference them externally
-
-Lets integrate the following into our existing docker compose file:
+Add following codes int `docker-compose.yml` file:
 
 ### Postgres
 
@@ -228,7 +227,7 @@ volumes:
     driver: local
 ```
 
-To install the postgres client into Gitpod
+### install the postgres client into Gitpod
 
 ```sh
   - name: postgres
@@ -239,9 +238,10 @@ To install the postgres client into Gitpod
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
 
+### install the extenstion (postgresql) in the VSC 
 ![image](https://user-images.githubusercontent.com/67248935/220879041-0ef28799-cf22-4470-bb91-1f214989c5d8.png)
 
-"psql -h localhost -U postgres"
+run `psql -h localhost -U postgres` for connecting the postgresql via CLI/Terminal
 
 
 ### DynamoDB Local
