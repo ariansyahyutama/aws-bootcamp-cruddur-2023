@@ -1,6 +1,6 @@
 # Week 1 — App Containerization
 
-<u> Local Installation </u>
+## <ins> Local Installation </ins>
 
 ### Install python version
 `pyenv install 3.10.9`
