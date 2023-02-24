@@ -316,3 +316,5 @@ def data_home():
   data = NotificationsActivities.run()
   return data, 200
 ```
+
+`from services.notifications_activities import *`
