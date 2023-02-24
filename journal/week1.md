@@ -308,3 +308,11 @@ volumes:
                 items:
                   $ref: '#/components/schemas/Activity'
 ```
+
+### add on app.py 
+```
+@app.route("/api/activities/notifications", methods=['GET'])
+def data_home():
+  data = NotificationsActivities.run()
+  return data, 200
+```
