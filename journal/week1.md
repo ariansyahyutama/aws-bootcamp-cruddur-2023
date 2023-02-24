@@ -287,3 +287,24 @@ volumes:
   db:
     driver: local
 ```
+
+
+### Notification
+
+```
+/api/activities/notifications:
+    get:
+      description: 'Return a feed of activity for all of those that I follow'
+      tags:
+        - activities
+      parameters: []
+      responses:
+        '200':
+          description: Returns an array of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+```
