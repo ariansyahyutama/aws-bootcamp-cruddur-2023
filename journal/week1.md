@@ -265,6 +265,9 @@ services:
 Example of using DynamoDB local
 https://github.com/100DaysOfCloud/challenge-dynamodb-local
 
+
+![image](https://user-images.githubusercontent.com/67248935/221133026-9766564c-0587-4cf1-a055-8f56c7620c5f.png)
+
 ## Volumes
 
 directory volume mapping
