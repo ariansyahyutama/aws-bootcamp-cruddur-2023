@@ -318,3 +318,7 @@ def data_home():
 ```
 
 `from services.notifications_activities import *`
+
+
+<img width="1356" alt="image" src="https://user-images.githubusercontent.com/67248935/221326093-6afe8a3e-65c7-4361-8c18-9df70a7ba962.png">
+
