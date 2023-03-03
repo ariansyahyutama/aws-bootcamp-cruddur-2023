@@ -70,7 +70,7 @@ gp env HONEYCOMB_SERVICE_NAME="Cruddur"
 
 ## add following codes in the home_activities
 
-https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
+source : https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
 
 ```
 def run():
@@ -80,15 +80,21 @@ def run():
       span.set_attribute("app.now", now.isoformat())
 ```
 
-add in the earlies of the page
+add in the earliest of the page home activities
 ```
 from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
-```
 
 tracer = trace.get_tracer("home.activities")
-in the end of the code add following code `span.set_attribute("app.result_length", len(results))` before return
+```
 
+
+in the end of the code before `returns` add following code 
+```
+span.set_attribute("app.result_length", len(results))
+```
+
+following is the result in honeycomb
 
 ![image](https://user-images.githubusercontent.com/67248935/222666798-31fe6b5d-eb16-488e-bd3c-6790e306ddb9.png)
 
