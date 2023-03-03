@@ -98,6 +98,8 @@ following is the result in honeycomb
 
 ![image](https://user-images.githubusercontent.com/67248935/222666798-31fe6b5d-eb16-488e-bd3c-6790e306ddb9.png)
 
+run the query
+<img width="1171" alt="image" src="https://user-images.githubusercontent.com/67248935/222670323-f6caa99d-0384-4499-a840-bb8d113e1487.png">
 
 
 ## X-Ray
