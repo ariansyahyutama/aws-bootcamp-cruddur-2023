@@ -79,7 +79,19 @@ def run():
       now = datetime.now(timezone.utc).astimezone()
       span.set_attribute("app.now", now.isoformat())
 ```
+
+add in the earlies of the page
+```
+from datetime import datetime, timedelta, timezone
+from opentelemetry import trace
+```
+
+tracer = trace.get_tracer("home.activities")
 in the end of the code add following code `span.set_attribute("app.result_length", len(results))` before return
+
+
+![image](https://user-images.githubusercontent.com/67248935/222666798-31fe6b5d-eb16-488e-bd3c-6790e306ddb9.png)
+
 
 
 ## X-Ray
