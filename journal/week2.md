@@ -188,6 +188,9 @@ aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 
 <img width="1425" alt="image" src="https://user-images.githubusercontent.com/67248935/222885903-6007fa57-b0c3-4349-abe8-abf306c15e7b.png">
 
+<img width="1349" alt="image" src="https://user-images.githubusercontent.com/67248935/222915026-e12c78b8-162a-4f60-ba1f-422395a2c1f8.png">
+
+
 
 ```sh
  wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
