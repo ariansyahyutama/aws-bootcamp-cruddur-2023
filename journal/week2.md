@@ -107,12 +107,13 @@ run the query
 ### update gitpod.yml file
 we will include `npm install` in the start up, then we don't need to do it manually anymore
 
-add following command in the tasks 
+add following command in the gitpod.yml
 ```
 - name: react-js
   command: |
     cd frontend-react-js
     npm i
+```
 
 ### Instrument AWS X-Ray for Flask
 
