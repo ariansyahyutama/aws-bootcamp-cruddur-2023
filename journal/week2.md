@@ -190,6 +190,9 @@ aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 
 <img width="1349" alt="image" src="https://user-images.githubusercontent.com/67248935/222915026-e12c78b8-162a-4f60-ba1f-422395a2c1f8.png">
 
+<img width="1626" alt="image" src="https://user-images.githubusercontent.com/67248935/222955863-7b18c910-85bd-4afc-9455-6f95856c9c1d.png">
+
+
 
 
 ```sh
@@ -212,19 +215,6 @@ aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
       - 2000:2000/udp
 ```
 
-We need to add these two env vars to our backend-flask in our `docker-compose.yml` file
-
-```yml
-      AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
-```
-
-### Check service data for last 10 minutes
-
-```sh
-EPOCH=$(date +%s)
-aws xray get-service-graph --start-time $(($EPOCH-600)) --end-time $EPOCH
-```
 
 
 
