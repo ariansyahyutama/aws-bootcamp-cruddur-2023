@@ -349,3 +349,6 @@ def rollbar_test():
 
 
 [Rollbar Flask Example](https://github.com/rollbar/rollbar-flask-example/blob/master/hello.py)
+
+<img width="1298" alt="image" src="https://user-images.githubusercontent.com/67248935/223163453-23baf50b-b136-4e77-8267-12592d45ae3c.png">
+
