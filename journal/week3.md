@@ -33,6 +33,15 @@ Amplify.configure({
   }
 });
 ```
+## configure environement variable in the dockerfile
+
+
+```
+  REACT_AWS_PROJECT_REGION:
+  REACT_APP_AWS_COGNITO_REGION:
+  REACT_APP_AWS_USER_POOLS_ID:
+  REACT_APP_CLIENT_ID:
+```
 
 ## Conditionally show components based on logged in or logged out
 
