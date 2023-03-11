@@ -250,6 +250,8 @@ if (cognitoErrors){
 <img width="1393" alt="image" src="https://user-images.githubusercontent.com/67248935/224516202-774a8ef1-6706-415d-b3e5-8d501f1a2c0f.png">
 
 ## Signup Page
+ we can sign up via cognito first, but the AWS GUI did not provide the reset password while we must change the password, then we can run following 
+`aws cognito-idp admin-set-user-password --username ariansyahy --password Priskabinaaws28! --user-pool-id us-east-1_jhkxLGL3V --permanent`
 
 ```js
 import { Auth } from 'aws-amplify';
