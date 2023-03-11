@@ -247,6 +247,7 @@ if (cognitoErrors){
 // just before submit component
 {errors}
 ```
+<img width="1393" alt="image" src="https://user-images.githubusercontent.com/67248935/224516202-774a8ef1-6706-415d-b3e5-8d501f1a2c0f.png">
 
 ## Signup Page
 
