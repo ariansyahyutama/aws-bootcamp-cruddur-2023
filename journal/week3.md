@@ -294,6 +294,13 @@ if (cognitoErrors){
 
 ## Confirmation Page
 
+<img width="1132" alt="image" src="https://user-images.githubusercontent.com/67248935/224533165-04fcba85-9009-4452-96fa-eaf1793dee13.png">
+
+
+<img width="1291" alt="image" src="https://user-images.githubusercontent.com/67248935/224533118-573687e4-5741-4424-bc89-ba5fc0e6757f.png">
+
+## Confirmation Page
+
 ```import { Auth } from 'aws-amplify';```
 
 ```js
