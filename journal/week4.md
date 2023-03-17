@@ -49,6 +49,9 @@ psql -U postgres -h localhost
 DROP database cruddur;
 ```
 
+<img width="827" alt="image" src="https://user-images.githubusercontent.com/67248935/225837492-a3f6edb5-7d51-4909-a009-01d3f726615a.png">
+
+
 We can create the database within the PSQL client
 
 ```sql
