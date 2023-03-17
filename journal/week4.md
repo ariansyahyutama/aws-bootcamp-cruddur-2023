@@ -60,7 +60,7 @@ CREATE database cruddur;
 
 ## Import Script
 
-We'll create a new SQL file called `schema.sql`
+We'll create a new SQL file called `schema.sql` , and create a new folder in a backend folder called db
 and we'll place it in `backend-flask/db`
 
 The command to import:
@@ -78,6 +78,8 @@ We'll need to use an extension called:
 CREATE EXTENSION "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
+prove:
+<img width="583" alt="image" src="https://user-images.githubusercontent.com/67248935/225839583-198c49c6-8983-4c12-aa5b-94e9d9815400.png">
 
 ## Create our tables
 
