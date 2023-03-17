@@ -1,7 +1,5 @@
 # Week 4 — Postgres and RDS
 
-# Week 4 — Postgres and RDS
-
 
 To connect to psql via the psql client cli tool remember to use the host flag to specific localhost.
 
@@ -49,7 +47,7 @@ psql -U postgres -h localhost
 DROP database cruddur;
 ```
 
-<img width="827" alt="image" src="https://user-images.githubusercontent.com/67248935/225837492-a3f6edb5-7d51-4909-a009-01d3f726615a.png">
+
 
 
 We can create the database within the PSQL client
@@ -57,6 +55,8 @@ We can create the database within the PSQL client
 ```sql
 CREATE database cruddur;
 ```
+
+<img width="827" alt="image" src="https://user-images.githubusercontent.com/67248935/225837492-a3f6edb5-7d51-4909-a009-01d3f726615a.png">
 
 ## Import Script
 
@@ -181,9 +181,11 @@ To execute the script:
 ```sh
 #! /usr/bin/bash
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL") 
 psql $NO_DB_CONNECTION_URL -c "DROP database cruddur;"
 ```
+<img width="609" alt="image" src="https://user-images.githubusercontent.com/67248935/225860219-fabb3ff9-23cf-44b1-a97b-f0ef3739f1c2.png">
+
 
 https://askubuntu.com/questions/595269/use-sed-on-a-string-variable-rather-than-a-file
 
