@@ -1,3 +1,4 @@
 #!/usr/bin/bash
 
-psql $CONNECTION_URL -c "drop database croddur;"
+NO_DB_CONNECTION_URL=$(sed 's/\/croddur//g' <<<"$CONNECTION_URL") 
+psql $NO_DB_CONNECTION_URL -c "drop database croddur;"
