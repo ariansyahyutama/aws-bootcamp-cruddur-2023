@@ -1,7 +1,5 @@
 # Week 4 — Postgres and RDS
 
-# Week 4 — Postgres and RDS
-
 
 To connect to psql via the psql client cli tool remember to use the host flag to specific localhost.
 
@@ -207,10 +205,12 @@ from pg_stat_activity;"
 `bin/db-create`
 
 ```sh
-#! /usr/bin/bash
+#!/usr/bin/bash
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-createdb cruddur $NO_DB_CONNECTION_URL
+
+echo "create database"
+NO_DB_CONNECTION_URL=$(sed 's/\/croddur//g' <<<"$CONNECTION_URL") 
+psql $NO_DB_CONNECTION_URL -c "create database croddur;"
 ```
 
 ## Shell script to load the schema
