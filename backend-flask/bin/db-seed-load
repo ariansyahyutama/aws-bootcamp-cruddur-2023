@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 
-
-echo "dbschema load"
-schema_path="$(realpath .)/db/schema.sql"
-echo $schema_path
+echo "db seed load"
+seed_path="$(realpath .)/db/seed.sql"
+echo $seed_path
 
 
 
@@ -15,6 +14,6 @@ else
   CONN_URL=$CONNECTION_URL
 fi
 
-psql $CONNECTION_URL cruddur < $schema_path
+psql $CONNECTION_URL cruddur < $seed_path
 
 
