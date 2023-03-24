@@ -553,3 +553,24 @@ VALUES
     'This was imported as seed data!',
     current_timestamp + interval '10 day'
   )
+
+
+
+  ### add psycopg for psql driver for python
+ 1. as per requirement file,please refer to requirement file
+
+  `pip install -r requirement_file`
+
+
+2. create db.py
+
+3. create connection url in the docker compose
+
+CONNECTION_URL: "${PROD_CONNECTION_URL}"
+
+4. import at home activity
+
+`from lib.db import pool`
+
+disable xray related
+
