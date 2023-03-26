@@ -569,7 +569,7 @@ psycopg[pool]
  this is to create connection pooling, connection pooling is like a proxy for db so they dont communicate by using existing connection
 
 2. create db.py
-`https://www.psycopg.org/psycopg3/docs/advanced/pool.html`
+https://www.psycopg.org/psycopg3/docs/advanced/pool.html
 
 3. create connection url in the docker compose
 
