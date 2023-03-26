@@ -560,7 +560,13 @@ VALUES
  1. as per requirement file,please refer to requirement file
 
   `pip install -r requirement_file`
-
+  
+  content of requirement fille
+  ```
+  psycopg[binary]
+psycopg[pool]
+```
+ this is to create connection pooling, connection pooling is like a proxy for db so they dont communicate by using existing connection
 
 2. create db.py
 
