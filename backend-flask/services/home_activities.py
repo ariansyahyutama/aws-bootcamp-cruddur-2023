@@ -22,7 +22,14 @@ class HomeActivities:
             cur.execute(sql)
             # this will return a tuple
             # the first field being the data
-            json = cur.fetchall()
+            #json = cur.fetchall()
+            rows = cur.fetchall()
+
+            for row in rows:
+              print(row)
+        
+        #print("----")
+        #print(json)
         return json[0]
         return results
       
