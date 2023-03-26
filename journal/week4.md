@@ -581,3 +581,7 @@ from lib.db import pool, query_wrap_array
       return json[0]
 ```
 
+<img width="1081" alt="image" src="https://user-images.githubusercontent.com/67248935/227786666-20ba8623-d42f-434e-863c-9f41b8801ca5.png">
+
+cont 35.08 , 
+
