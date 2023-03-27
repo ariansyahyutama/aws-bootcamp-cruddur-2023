@@ -585,3 +585,8 @@ from lib.db import pool, query_wrap_array
 
 <img width="1033" alt="image" src="https://user-images.githubusercontent.com/67248935/227889799-637d27a0-8ab0-40a3-b2bc-7089a2a8761f.png">
 
+with joim query
+<img width="1007" alt="image" src="https://user-images.githubusercontent.com/67248935/227919495-b887c3dd-2ee4-4e95-8098-b254086bf7df.png">
+
+<img width="1033" alt="image" src="https://user-images.githubusercontent.com/67248935/227889799-637d27a0-8ab0-40a3-b2bc-7089a2a8761f.png">
+
