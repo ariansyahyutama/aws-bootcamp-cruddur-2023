@@ -1,5 +1,8 @@
 goodDatabasePassword1
 
+crudur123
+dbcruddur
+
 postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
 
 export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
