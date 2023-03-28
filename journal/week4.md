@@ -401,84 +401,6 @@ We'll add a command step for postgres:
 ```
 
 
-## Setup Cognito post confirmation lambda
-
-### Create the handler function
-
-- Create lambda in same vpc as rds instance Python 3.8
-- Add a layer for psycopg2 with one of the below methods for development or production 
-
-ENV variables needed for the lambda environment.
-```
-PG_HOSTNAME='cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com'
-PG_DATABASE='cruddur'
-PG_USERNAME='root'
-PG_PASSWORD='huEE33z2Qvl383'
-```
-
-The function
-
-```
-import json
-import psycopg2
-
-def lambda_handler(event, context):
-    user = event['request']['userAttributes']
-    try:
-        conn = psycopg2.connect(
-            host=(os.getenv('PG_HOSTNAME')),
-            database=(os.getenv('PG_DATABASE')),
-            user=(os.getenv('PG_USERNAME')),
-            password=(os.getenv('PG_SECRET'))
-        )
-        cur = conn.cursor()
-        cur.execute("INSERT INTO users (display_name, handle, cognito_user_id) VALUES(%s, %s, %s)", (user['name'], user['email'], user['sub']))
-        conn.commit() 
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        
-    finally:
-        if conn is not None:
-            cur.close()
-            conn.close()
-            print('Database connection closed.')
-
-    return event
-```
-
-### Development
-https://github.com/AbhimanyuHK/aws-psycopg2
-
-`
-This is a custom compiled psycopg2 C library for Python. Due to AWS Lambda missing the required PostgreSQL libraries in the AMI image, we needed to compile psycopg2 with the PostgreSQL libpq.so library statically linked libpq library instead of the default dynamic link.
-`
-
-`EASIEST METHOD`
-
-Some precompiled versions of this layer are available publicly on AWS freely to add to your function by ARN reference.
-
-https://github.com/jetbridge/psycopg2-lambda-layer
-
-- Just go to Layers + in the function console and add a reference for your region
-
-`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1`
-
-
-Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
-
-- Download the package for the lambda runtime environment: [psycopg2_binary-2.9.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl](https://files.pythonhosted.org/packages/36/af/a9f06e2469e943364b2383b45b3209b40350c105281948df62153394b4a9/psycopg2_binary-2.9.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl)
-
-- Extract to a folder, then zip up that folder and upload as a new lambda layer to your AWS account
-
-### Production
-
-Follow the instructions on https://github.com/AbhimanyuHK/aws-psycopg2 to compile your own layer from postgres source libraries for the desired version.
-
-
-## Add the function to Cognito 
-
-Under the user pool properties add the function as a `Post Confirmation` lambda trigger.
 
 
 
@@ -590,3 +512,130 @@ with joim query
 
 <img width="1033" alt="image" src="https://user-images.githubusercontent.com/67248935/227889799-637d27a0-8ab0-40a3-b2bc-7089a2a8761f.png">
 
+
+
+## Setup Cognito post confirmation lambda
+
+### Create the handler function
+
+1. create lambda
+- author from scratch
+- python 3.8
+- use default
+
+- Create lambda in same vpc as rds instance Python 3.8
+- Add a layer for psycopg2 with one of the below methods for development or production 
+
+ENV variables needed for the lambda environment.
+```
+PG_HOSTNAME='cruddur-db-instance.czz1cuvepklc.ca-central-1.rds.amazonaws.com'
+PG_DATABASE='cruddur'
+PG_USERNAME='root'
+PG_PASSWORD='huEE33z2Qvl383'
+```
+but  we're using the os module to access the getenv() function. We pass in the name of the environment variable we want to retrieve as a string. If the environment variable is set, getenv() will return its value as a string. If the environment variable is not set, getenv() will return None.
+
+You can use os.getenv() to retrieve sensitive information such as API keys, database passwords, and other configuration values that you don't want to hardcode in your code. By setting these values as environment variables, you can easily change them without modifying your code.
+
+The function
+
+```
+import json
+import psycopg2
+import os
+
+def lambda_handler(event, context):
+    user = event['request']['userAttributes']
+    print('userAttributes')
+    print(user)
+
+    user_display_name  = user['name']
+    user_email         = user['email']
+    user_handle        = user['preferred_username']
+    user_cognito_id    = user['sub']
+    try:
+      print('entered-try')
+      sql = f"""
+         INSERT INTO public.users (
+          display_name, 
+          email,
+          handle, 
+          cognito_user_id
+          ) 
+        VALUES(%s,%s,%s,%s)
+      """
+      print('SQL Statement ----')
+      print(sql)
+      conn = psycopg2.connect(os.getenv('CONNECTION_URL'))
+      cur = conn.cursor()
+      params = [
+        user_display_name,
+        user_email,
+        user_handle,
+        user_cognito_id
+      ]
+      cur.execute(sql,*params)
+      conn.commit() 
+
+    except (Exception, psycopg2.DatabaseError) as error:
+      print(error)
+    finally:
+      if conn is not None:
+          cur.close()
+          conn.close()
+          print('Database connection closed.')
+    return event
+```
+
+In Amazon Cognito, user attributes are custom data that you can store for each user in a user pool. User attributes can be used to store any information you want to associate with a user, such as their email address, phone number, or custom metadata.
+
+Cognito provides some standard user attributes that you can use out-of-the-box, such as email, phone_number, given_name, and family_name. You can also create custom attributes for your specific use case.
+
+When a user signs up or signs in, their user attributes are included in the authentication event sent to your Lambda function or other custom code. You can use this information to customize your application's behavior based on the user's attributes.
+
+above code is an example of how to retrieve a user's attributes in a Lambda function
+
+we're using the userAttributes attribute of the request object to retrieve the user's attributes. We're then accessing the email attribute of the user's attributes to retrieve their email address.
+
+Note that the structure of the event object and the user attributes depends on the specific Cognito event that triggered the Lambda function, and the specific user pool configuration. You can customize the user attributes that are stored and retrieved by configuring your user pool's schema in the Cognito console or using the AWS CLI or SDK.
+
+In Python, a cursor object is used to interact with a database after a connection has been established. A cursor is created from a database connection object, and it can be used to execute SQL queries, fetch results, and perform other database operations.
+
+In this example, we're using the psycopg2 library to connect to a PostgreSQL database. After the connection is established, we create a new cursor object using the cursor() method on the connection object.
+
+We then execute a SQL query using the execute() method on the cursor object, passing in a string containing the SQL query. After the query is executed, we fetch the results using the fetchall() method on the cursor object, which returns a list of rows.
+
+Finally, we close the cursor object using the close() method, and close the database connection using the close() method on the connection object. It's important to always close the cursor and connection objects when you're done using them, to ensure that any resources used by them are properly released.
+
+### Development
+https://github.com/AbhimanyuHK/aws-psycopg2
+
+`
+This is a custom compiled psycopg2 C library for Python. Due to AWS Lambda missing the required PostgreSQL libraries in the AMI image, we needed to compile psycopg2 with the PostgreSQL libpq.so library statically linked libpq library instead of the default dynamic link.
+`
+
+`EASIEST METHOD`
+
+Some precompiled versions of this layer are available publicly on AWS freely to add to your function by ARN reference.
+
+https://github.com/jetbridge/psycopg2-lambda-layer
+
+- Just go to Layers + in the function console and add a reference for your region
+
+`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1`
+
+
+Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
+
+- Download the package for the lambda runtime environment: [psycopg2_binary-2.9.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl](https://files.pythonhosted.org/packages/36/af/a9f06e2469e943364b2383b45b3209b40350c105281948df62153394b4a9/psycopg2_binary-2.9.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl)
+
+- Extract to a folder, then zip up that folder and upload as a new lambda layer to your AWS account
+
+### Production
+
+Follow the instructions on https://github.com/AbhimanyuHK/aws-psycopg2 to compile your own layer from postgres source libraries for the desired version.
+
+
+## Add the function to Cognito 
+
+Under the user pool properties add the function as a `Post Confirmation` lambda trigger.
