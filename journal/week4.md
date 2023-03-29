@@ -539,6 +539,17 @@ You can use os.getenv() to retrieve sensitive information such as API keys, data
 
 The function
 
+it is like this
+    '''
+    conn = psycopg2.connect(
+    host="mydb.example.com",
+    port="5432",
+    database="mydatabase",
+    user="myuser",
+    password="mypassword"
+    )
+    '''
+
 ```
 import json
 import psycopg2
@@ -622,7 +633,9 @@ https://github.com/jetbridge/psycopg2-lambda-layer
 
 - Just go to Layers + in the function console and add a reference for your region
 
-`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1`
+`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1` replace accordingly by reffering this url https://github.com/jetbridge/psycopg2-lambda-layer
+
+next go to lambda triger in cognito under userpool properties
 
 
 Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
