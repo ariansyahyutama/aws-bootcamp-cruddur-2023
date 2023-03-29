@@ -638,7 +638,7 @@ https://github.com/jetbridge/psycopg2-lambda-layer
 next go to lambda triger in cognito under userpool properties
 <img width="918" alt="image" src="https://user-images.githubusercontent.com/67248935/228426292-ea3c473a-18d4-4813-b247-554be327212c.png">
 
-
+- edit the vpc part in lambda to allow communicate with DB postgresql
 
 Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
 
