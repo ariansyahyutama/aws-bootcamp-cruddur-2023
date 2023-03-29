@@ -19,6 +19,6 @@ else
   CONN_URL=$CONNECTION_URL
 fi
 
-psql $CONNECTION_URL cruddur < $schema_path
+psql $CONN_URL cruddur < $schema_path
 
 

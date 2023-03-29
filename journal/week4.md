@@ -642,6 +642,8 @@ next go to lambda triger in cognito under userpool properties
 - vpc part sg is important as well
 - <img width="1179" alt="image" src="https://user-images.githubusercontent.com/67248935/228473644-f92e5382-c4ef-4098-9fd9-1b4c5253ba33.png">
 
+runm db scheme and db-seed-load in the prod environement
+
 
 Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files
 
