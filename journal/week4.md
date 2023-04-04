@@ -209,10 +209,12 @@ from pg_stat_activity;"
 `bin/db-create`
 
 ```sh
-#! /usr/bin/bash
+#!/usr/bin/bash
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-createdb cruddur $NO_DB_CONNECTION_URL
+
+echo "create database"
+NO_DB_CONNECTION_URL=$(sed 's/\/croddur//g' <<<"$CONNECTION_URL") 
+psql $NO_DB_CONNECTION_URL -c "create database croddur;"
 ```
 
 ## Shell script to load the schema
@@ -299,63 +301,7 @@ psycopg[pool]
 pip install -r requirements.txt
 ```
 
-## DB Object and Connection Pool
 
-
-`lib/db.py`
-
-```py
-from psycopg_pool import ConnectionPool
-import os
-
-def query_wrap_object(template):
-  sql = '''
-  (SELECT COALESCE(row_to_json(object_row),'{}'::json) FROM (
-  {template}
-  ) object_row);
-  '''
-
-def query_wrap_array(template):
-  sql = '''
-  (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
-  {template}
-  ) array_row);
-  '''
-
-connection_url = os.getenv("CONNECTION_URL")
-pool = ConnectionPool(connection_url)
-```
-
-In our home activities we'll replace our mock endpoint with real api call:
-
-```py
-from lib.db import pool, query_wrap_array
-
-      sql = query_wrap_array("""
-      SELECT
-        activities.uuid,
-        users.display_name,
-        users.handle,
-        activities.message,
-        activities.replies_count,
-        activities.reposts_count,
-        activities.likes_count,
-        activities.reply_to_activity_uuid,
-        activities.expires_at,
-        activities.created_at
-      FROM public.activities
-      LEFT JOIN public.users ON users.uuid = activities.user_uuid
-      ORDER BY activities.created_at DESC
-      """)
-      print(sql)
-      with pool.connection() as conn:
-        with conn.cursor() as cur:
-          cur.execute(sql)
-          # this will return a tuple
-          # the first field being the data
-          json = cur.fetchone()
-      return json[0]
-```
 
 ## Provision RDS Instance
 
@@ -459,9 +405,127 @@ We'll add a command step for postgres:
 ```
 
 
+
+
+
+## create db-seed.sql
+
+-- this file was manually created
+INSERT INTO public.users (display_name, handle, cognito_user_id)
+VALUES
+  ('Andrew Brown', 'andrewbrown' ,'MOCK'),
+  ('Andrew Bayko', 'bayko' ,'MOCK');
+
+INSERT INTO public.activities (user_uuid, message, expires_at)
+VALUES
+  (
+    (SELECT uuid from public.users WHERE users.handle = 'andrewbrown' LIMIT 1),
+    'This was imported as seed data!',
+    current_timestamp + interval '10 day'
+  )
+
+
+
+  ### add psycopg for psql driver for python
+ 1. as per requirement file,please refer to requirement file
+
+  `qe`
+  
+  content of requirement fille
+  ```
+  psycopg[binary]
+psycopg[pool]
+```
+ this is to create connection pooling, connection pooling is like a proxy for db so they dont communicate by using existing connection
+
+2. create db.py
+https://www.psycopg.org/psycopg3/docs/advanced/pool.html
+
+`lib/db.py`
+
+```py
+from psycopg_pool import ConnectionPool
+import os
+
+def query_wrap_object(template):
+  sql = '''
+  (SELECT COALESCE(row_to_json(object_row),'{}'::json) FROM (
+  {template}
+  ) object_row);
+  '''
+
+def query_wrap_array(template):
+  sql = '''
+  (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
+  {template}
+  ) array_row);
+  '''
+
+connection_url = os.getenv("CONNECTION_URL")
+pool = ConnectionPool(connection_url)
+```
+
+3. create connection url in the docker compose
+
+CONNECTION_URL: "${PROD_CONNECTION_URL}"
+
+4. import at home activity
+
+`from lib.db import pool`
+
+disable xray related
+
+
+In our home activities we'll replace our mock endpoint with real api call:
+
+```py
+from lib.db import pool, query_wrap_array
+
+      sql = query_wrap_array("""
+      SELECT
+        activities.uuid,
+        users.display_name,
+        users.handle,
+        activities.message,
+        activities.replies_count,
+        activities.reposts_count,
+        activities.likes_count,
+        activities.reply_to_activity_uuid,
+        activities.expires_at,
+        activities.created_at
+      FROM public.activities
+      LEFT JOIN public.users ON users.uuid = activities.user_uuid
+      ORDER BY activities.created_at DESC
+      """)
+      print(sql)
+      with pool.connection() as conn:
+        with conn.cursor() as cur:
+          cur.execute(sql)
+          # this will return a tuple
+          # the first field being the data
+          json = cur.fetchone()
+      return json[0]
+```
+
+<img width="1081" alt="image" src="https://user-images.githubusercontent.com/67248935/227786666-20ba8623-d42f-434e-863c-9f41b8801ca5.png">
+
+<img width="1033" alt="image" src="https://user-images.githubusercontent.com/67248935/227889799-637d27a0-8ab0-40a3-b2bc-7089a2a8761f.png">
+
+with joim query
+<img width="1007" alt="image" src="https://user-images.githubusercontent.com/67248935/227919495-b887c3dd-2ee4-4e95-8098-b254086bf7df.png">
+
+<img width="1033" alt="image" src="https://user-images.githubusercontent.com/67248935/227889799-637d27a0-8ab0-40a3-b2bc-7089a2a8761f.png">
+
+
+
 ## Setup Cognito post confirmation lambda
 
 ### Create the handler function
+
+1. create lambda
+- author from scratch
+- python 3.8
+- use default
 
 - Create lambda in same vpc as rds instance Python 3.8
 - Add a layer for psycopg2 with one of the below methods for development or production 
@@ -473,37 +537,90 @@ PG_DATABASE='cruddur'
 PG_USERNAME='root'
 PG_PASSWORD='huEE33z2Qvl383'
 ```
+but  we're using the os module to access the getenv() function. We pass in the name of the environment variable we want to retrieve as a string. If the environment variable is set, getenv() will return its value as a string. If the environment variable is not set, getenv() will return None.
+
+You can use os.getenv() to retrieve sensitive information such as API keys, database passwords, and other configuration values that you don't want to hardcode in your code. By setting these values as environment variables, you can easily change them without modifying your code.
 
 The function
+
+it is like this
+    '''
+    conn = psycopg2.connect(
+    host="mydb.example.com",
+    port="5432",
+    database="mydatabase",
+    user="myuser",
+    password="mypassword"
+    )
+    '''
 
 ```
 import json
 import psycopg2
+import os
 
 def lambda_handler(event, context):
     user = event['request']['userAttributes']
+    print('userAttributes')
+    print(user)
+
+    user_display_name  = user['name']
+    user_email         = user['email']
+    user_handle        = user['preferred_username']
+    user_cognito_id    = user['sub']
     try:
-        conn = psycopg2.connect(
-            host=(os.getenv('PG_HOSTNAME')),
-            database=(os.getenv('PG_DATABASE')),
-            user=(os.getenv('PG_USERNAME')),
-            password=(os.getenv('PG_SECRET'))
-        )
-        cur = conn.cursor()
-        cur.execute("INSERT INTO users (display_name, handle, cognito_user_id) VALUES(%s, %s, %s)", (user['name'], user['email'], user['sub']))
-        conn.commit() 
+      print('entered-try')
+      sql = f"""
+         INSERT INTO public.users (
+          display_name, 
+          email,
+          handle, 
+          cognito_user_id
+          ) 
+        VALUES(%s,%s,%s,%s)
+      """
+      print('SQL Statement ----')
+      print(sql)
+      conn = psycopg2.connect(os.getenv('CONNECTION_URL'))
+      cur = conn.cursor()
+      params = [
+        user_display_name,
+        user_email,
+        user_handle,
+        user_cognito_id
+      ]
+      cur.execute(sql,*params)
+      conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        
+      print(error)
     finally:
-        if conn is not None:
-            cur.close()
-            conn.close()
-            print('Database connection closed.')
-
+      if conn is not None:
+          cur.close()
+          conn.close()
+          print('Database connection closed.')
     return event
 ```
+
+In Amazon Cognito, user attributes are custom data that you can store for each user in a user pool. User attributes can be used to store any information you want to associate with a user, such as their email address, phone number, or custom metadata.
+
+Cognito provides some standard user attributes that you can use out-of-the-box, such as email, phone_number, given_name, and family_name. You can also create custom attributes for your specific use case.
+
+When a user signs up or signs in, their user attributes are included in the authentication event sent to your Lambda function or other custom code. You can use this information to customize your application's behavior based on the user's attributes.
+
+above code is an example of how to retrieve a user's attributes in a Lambda function
+
+we're using the userAttributes attribute of the request object to retrieve the user's attributes. We're then accessing the email attribute of the user's attributes to retrieve their email address.
+
+Note that the structure of the event object and the user attributes depends on the specific Cognito event that triggered the Lambda function, and the specific user pool configuration. You can customize the user attributes that are stored and retrieved by configuring your user pool's schema in the Cognito console or using the AWS CLI or SDK.
+
+In Python, a cursor object is used to interact with a database after a connection has been established. A cursor is created from a database connection object, and it can be used to execute SQL queries, fetch results, and perform other database operations.
+
+In this example, we're using the psycopg2 library to connect to a PostgreSQL database. After the connection is established, we create a new cursor object using the cursor() method on the connection object.
+
+We then execute a SQL query using the execute() method on the cursor object, passing in a string containing the SQL query. After the query is executed, we fetch the results using the fetchall() method on the cursor object, which returns a list of rows.
+
+Finally, we close the cursor object using the close() method, and close the database connection using the close() method on the connection object. It's important to always close the cursor and connection objects when you're done using them, to ensure that any resources used by them are properly released.
 
 ### Development
 https://github.com/AbhimanyuHK/aws-psycopg2
@@ -520,7 +637,16 @@ https://github.com/jetbridge/psycopg2-lambda-layer
 
 - Just go to Layers + in the function console and add a reference for your region
 
-`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1`
+`arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1` replace accordingly by reffering this url https://github.com/jetbridge/psycopg2-lambda-layer
+
+next go to lambda triger in cognito under userpool properties
+<img width="918" alt="image" src="https://user-images.githubusercontent.com/67248935/228426292-ea3c473a-18d4-4813-b247-554be327212c.png">
+
+- edit the vpc part in lambda to allow communicate with DB postgresql
+- vpc part sg is important as well
+- <img width="1179" alt="image" src="https://user-images.githubusercontent.com/67248935/228473644-f92e5382-c4ef-4098-9fd9-1b4c5253ba33.png">
+
+runm db scheme and db-seed-load in the prod environement
 
 
 Alternatively you can create your own development layer by downloading the psycopg2-binary source files from https://pypi.org/project/psycopg2-binary/#files

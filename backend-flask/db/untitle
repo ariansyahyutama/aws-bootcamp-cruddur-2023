@@ -1,0 +1,16 @@
+goodDatabasePassword1
+
+crudur123
+dbcruddur
+
+postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+
+export CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
+gp env CONNECTION_URL="postgresql://postgres:password@localhost:5432/cruddur"
+
+export PROD_CONNECTION_URL="postgresql://root:Crodur2821!!@cruddur-db-instance.c9vosxdjq6wz.us-east-1.rds.amazonaws.com:5432/cruddur"
+gp env PROD_CONNECTION_URL="postgresql://root:Crodur2821!!@cruddur-db-instance.c9vosxdjq6wz.us-east-1.rds.amazonaws.com:5432/cruddur"
+
+
+export PROD_CONNECTION_URL="postgresql://root:cruddur123@db-cruddur.c9vosxdjq6wz.us-east-1.rds.amazonaws.com:5432/dbcruddur"
+gp env PROD_CONNECTION_URL="postgresql://root:cruddur123@cruddur-db-instance.c9vosxdjq6wz.us-east-1.rds.amazonaws.com:5432/cruddur"
