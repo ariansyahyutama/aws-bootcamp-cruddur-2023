@@ -1,6 +1,0 @@
-#!/usr/bin/env python
-# we can use the path whereis but it's not work 
-
-import boto3
-
-client = boto3.client('dynamodb')
