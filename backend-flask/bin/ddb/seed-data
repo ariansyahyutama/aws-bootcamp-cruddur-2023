@@ -91,7 +91,7 @@ now = datetime.now(timezone.utc).astimezone()
 users = get_user_uuids()
 
 create_message_group(
-  client=dynamodb,
+  client=ddb,
   message_group_uuid=message_group_uuid,
   my_user_uuid=users['my_user']['uuid'],
   other_user_uuid=users['other_user']['uuid'],
@@ -102,7 +102,7 @@ create_message_group(
 )
 
 create_message_group(
-  client=dynamodb,
+  client=ddb,
   message_group_uuid=message_group_uuid,
   my_user_uuid=users['other_user']['uuid'],
   other_user_uuid=users['my_user']['uuid'],
@@ -238,7 +238,7 @@ for i in range(len(lines)):
 
   created_at = (now + timedelta(minutes=i)).isoformat()
   create_message(
-    client=dynamodb,
+    client=ddb,
     message_group_uuid= message_group_uuid,
     created_at=created_at,
     message=message,
