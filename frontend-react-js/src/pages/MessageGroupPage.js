@@ -66,6 +66,7 @@ export default function MessageGroupPage() {
 
     loadMessageGroupsData();
     loadMessageGroupData();
+    checkAuth(setUser);
     
   }, [])
   return (

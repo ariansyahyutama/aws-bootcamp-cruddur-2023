@@ -9,6 +9,8 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 
+import checkAuth from '../lib/CheckAuth';
+
 // [TODO] Authenication
 import Cookies from 'js-cookie'
 
@@ -82,7 +84,8 @@ const checkAuth = async () => {
     dataFetchedRef.current = true;
 
     loadData();
-    checkAuth();
+    checkAuth(
+    );
   }, [])*/
 
   return (
