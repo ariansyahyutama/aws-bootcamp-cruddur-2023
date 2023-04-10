@@ -1,7 +1,7 @@
 import './MessageForm.css';
 import React from "react";
 import process from 'process';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 
 export default function ActivityForm(props) {
   const [count, setCount] = React.useState(0);
@@ -22,6 +22,7 @@ export default function ActivityForm(props) {
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
+          'Authorization': `Bearer ${localStorage.getItem("access_token")}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
