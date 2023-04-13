@@ -9,6 +9,8 @@ import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
 import ConfirmationPage from './pages/ConfirmationPage';
+import MessageGroupNewPage from './pages/MessageGroupNewPage';
+
 import React from 'react';
 import process from 'process';
 import {
@@ -53,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/messages/:message_group_uuid",
     element: <MessageGroupPage />
+  },
+  {
+    path: "/messages/new/:handle",
+    element: <MessageGroupNewPage />
   },
   {
     path: "/signup",

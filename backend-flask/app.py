@@ -32,6 +32,8 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+from services.users_short import *
+
 # Rollbar ------
 #from time import strftime
 #import os
@@ -240,6 +242,12 @@ def data_handle(handle):
     return model['errors'], 422
   else:
     return model['data'], 200
+    
+@app.route("/api/users/@<string:handle>/short", methods=['GET'])
+def data_users_short(handle):
+  data = UsersShort.run(handle)
+  return data, 200
+
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
