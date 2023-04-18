@@ -3,35 +3,6 @@
 I COPY THE FORMAT FROM OLLEY BECAUSE SHE WROTE VERY GOOD JOURNAL, I WILL EDIT ACCORDINGLY
 
 
-# Week 6 — Deploying Containers
-
-Contents:
-1. [ECS Security Considerations](#ecs-security-considerations)
-2. [Fargate Technical Questions]
-3. [Provision ECS Cluster](#provision-ecs-cluster)
-4. [Create ECR repo and push image for backend-flask](#create-ecr-repo-and-push-image-for-backend-flask)
-
-## ECS Security Considerations
-[Watched ECS Security by Ashish](https://www.youtube.com/watch?v=zz2FQAk1I28&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=57)
-Best practice:
-* scan on push
-* enable tag immutability
-* enable encryption with KMS
-* access control following the least privilege principle
-* use VPC endpoints
-* granular access in security groups only for those who need access
-* ensure compliance standard
-* apply Organization SCPs for stricter access
-* enable CloudTrail and Container insights
-* enable Config rules (no GuardDuty for ECS?)
-* only use safe images withought critical / high vulnerabilities
-* do not store passwords in task definitions, use Secrets Manager instead
-
-## Fargate Technical Questions
-  Watch Fargate Technical Questions with Maish (Not yet uploaded)
-  
-## Provision ECS Cluster
-[stream link](https://www.youtube.com/watch?v=QIZx2NhdCMI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=58)
 
 ### Create script to test connection to RDS :white_check_mark:
 1. go to backend-flask/bin/db folder and create a new script 'test' to test connection to RDS in AWS:
@@ -56,8 +27,8 @@ finally:
 ```
 2. make it executable with ```chmod u+x``` command
 3. note that my CONNECTION_URL = PROD_CONNECTION_URL
-4. remember to update GITPOD_UP and run update security group script
-5. run ```./bin/db/test``` script from backend-flask folder
+4. check IP address of the gitpod, and change in the security group because I did not set it automatically
+5. run ```./bin/db-test``` script from backend-flask folder
 6. expected response:
 ```bash
 gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ ./bin/db/test
@@ -66,9 +37,9 @@ Connection successful!
 ```
 
 
-### Implement health check for backend container :white_check_mark:
+### Implement health check for backend container :
 1. go to app.py
-2. add these lines above rollbar test:
+2. add these lines:
 ```python
 @app.route('/api/health-check')
 def health_check():
@@ -105,7 +76,7 @@ gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ ./bin/flask/h
 gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ 
 ```
 
-### Create CloudWatch Log Group :white_check_mark:
+### Create CloudWatch Log Group :
 
 1. got to AWS CloudWatch console
 2. run these commands in CLI (or CloudShell):
