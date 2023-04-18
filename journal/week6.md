@@ -4,7 +4,7 @@ I COPY THE FORMAT FROM OLLEY BECAUSE SHE WROTE VERY GOOD JOURNAL, I WILL EDIT AC
 
 
 
-### Create script to test connection to RDS :white_check_mark:
+### Create script to test connection to RDS :
 1. go to backend-flask/bin/db folder and create a new script 'test' to test connection to RDS in AWS:
 ```python
 #!/usr/bin/env python3
@@ -13,7 +13,7 @@ import psycopg
 import os
 import sys
 
-connection_url = os.getenv("CONNECTION_URL")
+connection_url = os.getenv("PROD_CONNECTION_URL")
 
 conn = None
 try:
@@ -26,12 +26,11 @@ finally:
   conn.close()
 ```
 2. make it executable with ```chmod u+x``` command
-3. note that my CONNECTION_URL = PROD_CONNECTION_URL
-4. check IP address of the gitpod, and change in the security group because I did not set it automatically
-5. run ```./bin/db-test``` script from backend-flask folder
-6. expected response:
+3. check IP address of the gitpod, and change it accordingly in the security group, I did not set it automatically previously following is the command ```curl ifconfig.me```
+4. run ```./bin/db-test``` script from backend-flask folder
+5. expected response:
 ```bash
-gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ ./bin/db/test
+gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (week6) $ ./bin/db-test 
 attempting connection
 Connection successful!
 ```
@@ -71,9 +70,8 @@ except Exception as e:
 6. run ```./bin/flask/health-check```
 7. Andrew had error '111 Connection refused' watched, so did I:
 ```bash
-gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ ./bin/flask/health-check
+gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (week6) $ ./bin/flask/health-check 
 <urlopen error [Errno 111] Connection refused>
-gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ 
 ```
 
 ### Create CloudWatch Log Group :
@@ -87,7 +85,7 @@ aws logs put-retention-policy --log-group-name "/cruddur/fargate-cluster" --rete
 3. retention days set to 1 for the cost reason. The lowest it can be!
 4. go back to the AWS CloudWatch console and check that '/cruddur/fargate-cluster' log group appeared
 
-### Create ECS Cluster :white_check_mark:
+### Create ECS Cluster:
 1. run these commands in CLI (CloudShell):
 ```
 aws ecs create-cluster \
@@ -99,11 +97,11 @@ aws ecs create-cluster \
 
 
 	
-## Create ECR repo and push image for backend-flask  :white_check_mark:
-[stream link] (https://www.youtube.com/watch?v=QIZx2NhdCMI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=58)
+## Create ECR repo and push image for backend-flask :
+
 We are going to create 3 repos:
 
-#### Base Image Python :white_check_mark:
+#### Base Image Python :
 1. create a repository for base python image
 ```
 aws ecr create-repository \
@@ -116,9 +114,9 @@ aws ecr create-repository \
 ```
 aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
 ```
-5 expected reult from the terminal:
+5 expected result from the terminal:
 ```
-gitpod /workspace/aws-bootcamp-cruddur-2023/backend-flask (main) $ aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+gitpod /workspace/aws-bootcamp-cruddur-2023 (week6) $ aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
 WARNING! Your password will be stored unencrypted in /home/gitpod/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
@@ -149,7 +147,7 @@ docker.io/library/python:3.10-slim-buster
 11. tag image: ```docker tag python:3.10-slim-buster $ECR_PYTHON_URL:3.10-slim-buster```
 12. push image: ```docker push $ECR_PYTHON_URL:3.10-slim-buster```
 13. got to ECR console, navigate inside the cruddur repository and check that this image is present
-14. next we need to set URI to pull the image in our Dockerfile like so ```FROM ${ECR_PYTHON_URL}:3.10-slim-buster```
+14. next we need to set URI to pull the image in our Dockerfile like so ```FROM 776552123053.dkr.ecr.us-east-1.amazonaws.com/cruddur-python:3.10-slim-buster```
 15. ```docker compose up backend-flask db```
 16. go to cruddur back-end container url and append with ```/api/health-check```. Health check shall be successful:
 ```
@@ -158,7 +156,8 @@ docker.io/library/python:3.10-slim-buster
 }
 ```
 
-#### Flask image :white_check_mark:
+
+#### Flask image :
 
 1.create Repo
 ```
@@ -186,7 +185,7 @@ docker push $ECR_BACKEND_FLASK_URL:latest
 6. Fargate will look for 'latest' tag but we probably shall use tags in real DevOps life
 
 	
-## Deploy Backend Flask app as a service to Fargate :white_check_mark:	
+## Deploy Backend Flask app as a service to Fargate :	
 [stream link](https://www.youtube.com/watch?v=QIZx2NhdCMI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=58)
 1. Login to the AWS ECS console
 2. go to our cruddur cluster. You'll see tabs 'Services' and 'Tasks'. The difference is that service is continiously running whereas tasks kills itself when it finished its job (better suited for batch jobs). We want a service because we are running a web application.
