@@ -207,7 +207,7 @@ aws ecs create-cluster \
 ```
 9. create service-execution-policy.json on aws/policy/ , note that ${AWS::AccountId} shall be substituted with account id value otherwise CLI throws error
 ```json
-{
+  {
     "Version":"2012-10-17",
     "Statement":[{
       "Effect": "Allow",
@@ -219,11 +219,11 @@ aws ecs create-cluster \
     }]
   }
 ```
-10. run the role creation command in CLI:
+10. run the role creation command in CLI, by refering number 8:
 ```
 aws iam create-role \    
 --role-name CruddurServiceExecutionRole  \   
---assume-role-policy-document file://aws/policy/service-execution-policy.json
+--assume-role-policy-document file://aws/policy/service-assume-rolle-execution-policy.json
 ```
 11. create ssm parameters via CLI:
 ```
@@ -232,8 +232,21 @@ aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_S
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/CONNECTION_URL" --value $PROD_CONNECTION_URL
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN" --value $ROLLBAR_ACCESS_TOKEN
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" --value "x-honeycomb-team=$HONEYCOMB_API_KEY"
+
+aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_COGNITO_USER_POOL_ID" --value $AWS_COGNITO_USER_POOL_ID
+aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_COGNITO_USER_POOL_CLIENT_ID" --value $AWS_COGNITO_USER_POOL_CLIENT_ID
+aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_DEFAULT_REGION" --value $AWS_DEFAULT_REGION
 ```
 12. go to AWS SSM console, navigate to Parameter Store and check if they all set correctly
+
+12.5  run following command
+```
+aws iam put-role-policy \
+  --policy-name CruddurServiceExecutionPolicy \
+  --role-name CruddurServiceExecutionRole \
+  --policy-document file://aws/policy/service-execution-policy.json
+"
+```
 13. create task role:
 ```json
 aws iam create-role \
@@ -277,16 +290,10 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSXRayDaemonWri
 16. under aws folder create a new one called 'task-definition'
 17. create a new file called backend-flask.json inside of this new folder
 18. register task definition and make sure these are defined on the task level:
-```
-"cpu": "256",
-  "memory": "512",
-  "requiresCompatibilities": [ 
-    "FARGATE" 
-  ],
-```
+
 run command in CLI:
 ```
-aws ecs register-task-definition --cli-input-json file://aws/task-definitions/backend-flask.json
+aws ecs register-task-definition --cli-input-json file://aws/task-definition/backend-flask.json
 ```
 19. go to ECS console and check that task definition was created
 20. get dafault VPC by running this command:
@@ -618,7 +625,7 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 77. turn on access logs for the ALB on tab Attributes
 
 
-## Create ECR repo and push image for fronted-react-js	:white_check_mark:
+## Create ECR repo and push image for fronted-react-js	:
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 78. create file frontend-react-js.json in task-definitions folder (GitPod) - get one from Andrews week6-fargate branch
 79. create Dockerfile.prod for frontend-react-js container. We will be using multi-stage build for frontend container
@@ -704,15 +711,15 @@ aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-j
 ![cruddur_behind_alb](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/374f1d75359de55034a3bbf3e4d482b5c34792e8/_docs/assets/cruddur_fargate.png)
 105. tear down ALB and ECS tasks for cost savings. stop RDS
 
-## Provision and configure Application Load Balancer along with target groups :white_check_mark:	
+## Provision and configure Application Load Balancer along with target groups :	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 was done in previous section from step 61
 	
-## Manage your domain useing Route53 via hosted zone :white_check_mark:		
+## Manage your domain useing Route53 via hosted zone :		
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 My domain was bought via Amazon Route 53 service, and AWS automatically created a hosted zone with NS and SOA records
 	
-## Create an SSL cerificate via ACM :white_check_mark:	
+## Create an SSL cerificate via ACM :	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 
 1. go to AWS console and navigate to Certificate manager
@@ -733,7 +740,7 @@ My domain was bought via Amazon Route 53 service, and AWS automatically created 
 16. choose listener for port 443 and click on Actions and select Manage Rules
 17. add a rule under host header and put value ```api.<yourdomain>``` in field 'is' and forward traffic to backend target group
 	
-## Setup a record set for naked domain to point to frontend-react-js :white_check_mark:
+## Setup a record set for naked domain to point to frontend-react-js :
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 1. go to Route 53, choose our hosted zone
 2. add A record for naked domain routing to ALB
