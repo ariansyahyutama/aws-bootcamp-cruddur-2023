@@ -85,18 +85,7 @@ aws logs put-retention-policy --log-group-name "/cruddur/fargate-cluster" --rete
 3. retention days set to 1 for the cost reason. The lowest it can be!
 4. go back to the AWS CloudWatch console and check that '/cruddur/fargate-cluster' log group appeared
 
-### Create ECS Cluster:
-1. run these commands in CLI (CloudShell):
-```
-aws ecs create-cluster \
---cluster-name cruddur \
---service-connect-defaults namespace=cruddur
-```
-2. Check in AWS console that the cluster is created and new tasks are not running yet, i.e. no spend concern just yet
-3. no need for security groups for now
 
-
-	
 ## Create ECR repo and push image for backend-flask :
 
 We are going to create 3 repos:
@@ -184,12 +173,22 @@ docker push $ECR_BACKEND_FLASK_URL:latest
 ```
 6. Fargate will look for 'latest' tag but we probably shall use tags in real DevOps life
 
+### Create ECS Cluster:
+1. run these commands in CLI (CloudShell):
+```
+aws ecs create-cluster \
+--cluster-name cruddur \
+--service-connect-defaults namespace=cruddur
+```
+2. Check in AWS console that the cluster is created and new tasks are not running yet, i.e. no spend concern just yet
+3. no need for security groups for now
+
 	
 ## Deploy Backend Flask app as a service to Fargate :	
 [stream link](https://www.youtube.com/watch?v=QIZx2NhdCMI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=58)
 1. Login to the AWS ECS console
 2. go to our cruddur cluster. You'll see tabs 'Services' and 'Tasks'. The difference is that service is continiously running whereas tasks kills itself when it finished its job (better suited for batch jobs). We want a service because we are running a web application.
-3. we need to create a task definition that is similar to Docker file that defines how to build a cintainer.
+3. we need to create a task definition that is similar to Docker file that defines how to build a container.
 4. AWS will take care of envoy proxy
 5. task role defines permission that container will have when it is running whereas execution role is when task is executed
 6. we will use awsvpc mode to have ENI automatically assigned
