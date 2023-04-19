@@ -189,11 +189,11 @@ aws ecs create-cluster \
 1. Login to the AWS ECS console
 2. go to our cruddur cluster. You'll see tabs 'Services' and 'Tasks'. The difference is that service is continiously running whereas tasks kills itself when it finished its job (better suited for batch jobs). We want a service because we are running a web application.
 3. we need to create a task definition that is similar to Docker file that defines how to build a container.
-4. AWS will take care of envoy proxy
+4. AWS will take care of envoy proxy if there are 2 containers
 5. task role defines permission that container will have when it is running whereas execution role is when task is executed
 6. we will use awsvpc mode to have ENI automatically assigned
 7. we shall keep cpu and memory ratio as 1:2 (256Mb : 512Mb)
-8. create service-assume-role-execution-policy.json
+8. create service-assume-role-execution-policy.json on aws/policy/
 ```json
 {
     "Version":"2012-10-17",
@@ -205,7 +205,7 @@ aws ecs create-cluster \
       }}]
   }  
 ```
-9. create service-execution-policy.json, note that ${AWS::AccountId} shall be substituted with account id value otherwise CLI throws error
+9. create service-execution-policy.json on aws/policy/ , note that ${AWS::AccountId} shall be substituted with account id value otherwise CLI throws error
 ```json
 {
     "Version":"2012-10-17",
@@ -223,7 +223,7 @@ aws ecs create-cluster \
 ```
 aws iam create-role \    
 --role-name CruddurServiceExecutionRole  \   
---assume-role-policy-document file://aws/policies/service-assume-role-execution-policy.json
+--assume-role-policy-document file://aws/policy/service-execution-policy.json
 ```
 11. create ssm parameters via CLI:
 ```
