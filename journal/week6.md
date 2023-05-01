@@ -360,26 +360,19 @@ An error occurred (InvalidParameterException) when calling the ExecuteCommand op
     "desiredCount": 1,
     "enableECSManagedTags": true,
     "enableExecuteCommand": true,
-    "loadBalancers": [
-      {
-          "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:ACCOUNT_ID:targetgroup/cruddur-backend-flask-tg/TARGET_GROUP_ID",
-          "containerName": "backend-flask",
-          "containerPort": 4567
-      }
-    ],
     "networkConfiguration": {
       "awsvpcConfiguration": {
         "assignPublicIp": "ENABLED",
         "securityGroups": [
-          "sg-0f712624a41a7ce84"
+          "sg-012bcb5cd10e5d01c"
         ],
         "subnets": [
-          "subnet-06377ea30fef723df",
-          "subnet-07891b0180376d75c",
-          "subnet-0419619de27cb7b35",
-          "subnet-06ca0ac2341ac85c5",
-          "subnet-0ef64c831e44e3e96",
-          "subnet-016685aff57e51d74"
+          "subnet-040fc45247b25248e",
+          "subnet-0607a33c9bdfa2d5d",
+          "subnet-03ad51c1dd555b35b",
+          "subnet-02b299d042310ee73",
+          "subnet-005de388f47f44842",
+          "subnet-07920a410b2072995"
         ]
       }
     },
