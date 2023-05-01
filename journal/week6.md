@@ -442,95 +442,12 @@ aws ecs execute-command  \
 41. when accessing the public ip address 
 <img width="657" alt="image" src="https://user-images.githubusercontent.com/67248935/235461842-834080f2-39c0-4d1f-8c19-08219074349f.png">
 
-41. my cloudwatch logs show errors:
-```
 
-2023-04-11T19:12:23.493+10:00	127.0.0.1 - - [11/Apr/2023 09:12:23] "GET /api/health-check HTTP/1.1" 200 -
-
-2023-04-11T19:12:31.878+10:00	Encountered an issue while polling sampling rules.
-
-2023-04-11T19:12:31.878+10:00
-
-Traceback (most recent call last):
-Traceback (most recent call last):
-
-2023-04-11T19:12:31.878+10:00
-File "/usr/local/lib/python3.10/site-packages/urllib3/connection.py", line 174, in _new_conn
-
-2023-04-11T19:12:31.878+10:00	conn = connection.create_connection(
-
-2023-04-11T19:12:31.878+10:00	ConnectionRefusedError: [Errno 111] Connection refused
-
-2023-04-11T19:12:31.878+10:00	During handling of the above exception, another exception occurred:
-
-2023-04-11T19:12:31.878+10:00	Traceback (most recent call last):
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/botocore/httpsession.py", line 455, in send
-
-2023-04-11T19:12:31.878+10:00	urllib_response = conn.urlopen(
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 787, in urlopen
-
-2023-04-11T19:12:31.878+10:00	retries = retries.increment(
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/util/retry.py", line 525, in increment
-
-2023-04-11T19:12:31.878+10:00	raise six.reraise(type(error), error, _stacktrace)
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/packages/six.py", line 770, in reraise
-
-2023-04-11T19:12:31.878+10:00	raise value
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 703, in urlopen
-
-2023-04-11T19:12:31.878+10:00	httplib_response = self._make_request(
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 398, in _make_request
-
-2023-04-11T19:12:31.878+10:00	conn.request(method, url, **httplib_request_kw)
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/urllib3/connection.py", line 244, in request
-
-2023-04-11T19:12:31.878+10:00	super(HTTPConnection, self).request(method, url, body=body, headers=headers)
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/http/client.py", line 1283, in request
-
-2023-04-11T19:12:31.878+10:00	self._send_request(method, url, body, headers, encode_chunked)
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/site-packages/botocore/awsrequest.py", line 94, in _send_request
-
-2023-04-11T19:12:31.878+10:00	rval = super()._send_request(
-
-2023-04-11T19:12:31.878+10:00	File "/usr/local/lib/python3.10/http/client.py", line 1329, in _send_request
-
-2023-04-11T19:12:31.879+10:00	self.endheaders(body, encode_chunked=encode_chunked)
-
-2023-04-11T19:12:31.879+10:00	File "/usr/local/lib/python3.10/http/client.py", line 1278, in endheaders
-
-2023-04-11T19:12:31.879+10:00	self._send_output(message_body, encode_chunked=encode_chunked)
-
-2023-04-11T19:12:31.879+10:00	File "/usr/local/lib/python3.10/site-packages/botocore/awsrequest.py", line 123, in _send_output
-
-2023-04-11T19:12:31.879+10:00	self.send(msg)
-
-2023-04-11T19:12:31.879+10:00	File "/usr/local/lib/python3.10/site-packages/botocore/awsrequest.py", line 218, in send
-
-2023-04-11T19:12:31.879+10:00	return super().send(str)
-
-2023-04-11T19:12:31.879+10:00	File "/usr/local/lib/python3.10/http/client.py", line 976, in send
-
-2023-04-11T19:12:31.879+10:00	self.connect()
-```
-42. I had to comment out xray lines in app.py
 43. updated ecs security group to have inbound port 4567 instead of 80
-44. fixed path for health-check CMD command in task definition
-45. rebuilt backend-flask image, pushed it to ECR, ran command to create a new task revision in ECS
-46. ran command to create an ECS service via CLI
-47. the task appeared to be healthy! 
 48. Commamd for listing tasks: ```aws ecs list-tasks --cluster cruddur```
 49. go to EC2 -> security groups and select default security group
 50. update inbound rules and add 5432 PostgreSQL port to be allowed for crud-srv-sg that we use for ECS
-51. connect to container from Gitpod and when inside run this command: ```./bin/db/test```
+51. connect to container from Gitpod and when inside run this command: ```./bin/db-connect```
 52. expected reult from terminal shall show that connection was successful:
 ```
 gitpod /workspace/aws-bootcamp-cruddur-2023 (main) $ ./backend-flask/bin/ecs/connect-to-service a029820332714163b5249cc11cb6ba61TASK ID : a029820332714163b5249cc11cb6ba61
