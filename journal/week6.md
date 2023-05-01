@@ -438,6 +438,9 @@ aws ecs execute-command  \
 --command "/bin/bash" \
 --interactive
 ```
+
+41. <img width="657" alt="image" src="https://user-images.githubusercontent.com/67248935/235461842-834080f2-39c0-4d1f-8c19-08219074349f.png">
+
 41. my cloudwatch logs show errors:
 ```
 
