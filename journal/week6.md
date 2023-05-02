@@ -463,23 +463,9 @@ Connection successful!
 root@ip-172-31-41-113:/backend-flask# 
 ```
 53. go back to ECS task and copy its public IP. append it with :4567/api/activities/home
-54. hooray, we are getting raw data from production RDS database: 
-```json
-[
-  {
-    "created_at": "2023-04-03T09:10:58.968124",
-    "display_name": "Olley T",
-    "expires_at": "2023-04-10T09:10:58.935268",
-    "handle": "olleyt",
-    "likes_count": 0,
-    "message": "Crud button only works from home page",
-    "replies_count": 0,
-    "reply_to_activity_uuid": null,
-    "reposts_count": 0,
-    "uuid": "64596a14-552d-4ccb-9c10-3bce87998130"
-  }
-]
-```
+54. we are getting raw data from production RDS database: 
+![image](https://user-images.githubusercontent.com/67248935/235554275-b346c6f8-8ce3-4171-bcd3-1be45384ed9f.png)
+  
 The endpoint is not secured and everyone cah hit it but we are one step closer with implementing Cruddur
 55. go back to ECS console and delte the service
 56. recreate it manually with 'Turn on Service Connect' option, map all fields except port to backend-flask and port to 4567
@@ -489,7 +475,7 @@ The endpoint is not secured and everyone cah hit it but we are one step closer w
 ```
 aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.json
 ```
-60. grab publick IP of the task and check the health check still returns success
+60. grab public IP of the task and check the health check still returns success
 61. create ALB in AWS Console (GUI), service connect is able to work with ALB
     * name: cruddur-alb
     * select all subnets for the default VPC
