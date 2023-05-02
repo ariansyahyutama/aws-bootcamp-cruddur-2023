@@ -53,7 +53,7 @@
         "secrets": [
           {"name": "AWS_ACCESS_KEY_ID", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/AWS_ACCESS_KEY_ID"},
           {"name": "AWS_SECRET_ACCESS_KEY", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/AWS_SECRET_ACCESS_KEY"},
-          {"name": "PROD_CONNECTION_URL", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/PROD_CONNECTION_URL" },
+          {"name": "CONNECTION_URL", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/PROD_CONNECTION_URL" },
           {"name": "ROLLBAR_ACCESS_TOKEN", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN" },
           {"name": "OTEL_EXPORTER_OTLP_HEADERS", "valueFrom": "arn:aws:ssm:us-east-1:776552123053:parameter/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" }
           
