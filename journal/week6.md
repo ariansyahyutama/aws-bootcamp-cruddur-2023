@@ -468,10 +468,14 @@ root@ip-172-31-41-113:/backend-flask#
   
 The endpoint is not secured and everyone cah hit it but we are one step closer with implementing Cruddur
 55. go back to ECS console and delte the service
-56. recreate it manually with 'Turn on Service Connect' option, map all fields except port to backend-flask and port to 4567
-57. we will have a nice service url to connect to but for now let's delete this service
-58. now we will restore deleted code for service connect in service-backend-flask.json
-59. then create ECS service with CLI command: 
+
+57. recreate it manually with 'Turn on Service Connect' option, map all fields except port to backend-flask and port to 4567
+
+58. we will have a nice service url to connect to but for now let's delete this service
+
+59. now we will restore deleted code for service connect in service-backend-flask.json
+
+60. then create ECS service with CLI command: 
 ```
 aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.json
 ```
