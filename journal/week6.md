@@ -467,6 +467,7 @@ root@ip-172-31-41-113:/backend-flask#
 ![image](https://user-images.githubusercontent.com/67248935/235554275-b346c6f8-8ce3-4171-bcd3-1be45384ed9f.png)
   
 The endpoint is not secured and everyone cah hit it but we are one step closer with implementing Cruddur
+
 55. go back to ECS console and delte the service
 
 57. recreate it manually with 'Turn on Service Connect' option, map all fields except port to backend-flask and port to 4567
