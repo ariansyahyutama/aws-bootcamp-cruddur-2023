@@ -530,7 +530,8 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 77. turn on access logs for the ALB on tab Attributes
 
 
-## Create ECR repo and push image for fronted-react-js	:
+
+## Create ECR repo and push image for fronted-react-js	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 78. create file frontend-react-js.json in task-definitions folder (GitPod) - get one from Andrews week6-fargate branch
 79. create Dockerfile.prod for frontend-react-js container. We will be using multi-stage build for frontend container
@@ -616,15 +617,15 @@ aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-j
 ![cruddur_behind_alb](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/374f1d75359de55034a3bbf3e4d482b5c34792e8/_docs/assets/cruddur_fargate.png)
 105. tear down ALB and ECS tasks for cost savings. stop RDS
 
-## Provision and configure Application Load Balancer along with target groups :	
+## Provision and configure Application Load Balancer along with target groups	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 was done in previous section from step 61
 	
-## Manage your domain useing Route53 via hosted zone :		
+## Manage your domain useing Route53 via hosted zone	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 My domain was bought via Amazon Route 53 service, and AWS automatically created a hosted zone with NS and SOA records
 	
-## Create an SSL cerificate via ACM :	
+## Create an SSL cerificate via ACM	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 
 1. go to AWS console and navigate to Certificate manager
@@ -645,13 +646,13 @@ My domain was bought via Amazon Route 53 service, and AWS automatically created 
 16. choose listener for port 443 and click on Actions and select Manage Rules
 17. add a rule under host header and put value ```api.<yourdomain>``` in field 'is' and forward traffic to backend target group
 	
-## Setup a record set for naked domain to point to frontend-react-js :
+## Setup a record set for naked domain to point to frontend-react-js 
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 1. go to Route 53, choose our hosted zone
 2. add A record for naked domain routing to ALB
 	
 	
-## Setup a record set for api subdomain to point to the backend-flask :white_check_mark:
+## Setup a record set for api subdomain to point to the backend-flask 
 https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59
 1. go to Route 53, choose our hosted zone
 2. add A record for api sub domain routing to ALB
@@ -669,7 +670,7 @@ returns:
 ```
 	
 	
-## Configure CORS to only permit traffic from our domain :white_check_mark:	
+## Configure CORS to only permit traffic from our domain 	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 
 1. go to ```backend-flask.json``` task definition and change these two lines to specifc domains:
@@ -705,7 +706,7 @@ docker build \
 14. sign in into Cruddur and try to create a Crud
 15. go to messages and create a new message appending ```/messages/new/@handleofuser```. Andrew hit the 500 error but it worked for me.	
 	
-## Secure Flask by not running in debug mode :white_check_mark:	
+## Secure Flask by not running in debug mode 	
 [stream link](https://www.youtube.com/watch?v=9OQZSBKzIgs&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=60)
 1. go to EC2 in AWS Console, navigate to ALB security group
 2. delete inbound rules for ports 3000, 4567
@@ -768,11 +769,16 @@ def health_check():
 27. refactor docker biold scripts for backend and front end to use absolute path. (Stream point: 31:20)
 28. further refctor db setup, update_cognito_user_ids, seed and seed.sql scripts following the video stream. Note: I don't use mock data because those users are not in my cognito pool and I am not listing my users in public repository for security reasons
 29. refactor bin directory and have explicit folders for frontend and backend with build, run, deploy, connect scripts for easier use
-30. [not yet done]: delete existing ECS servies
-31. rebuild and push frontend and backend services
+30. delete existing ECS servies in AWS console
+31. login to ECR from the Gitpod terminal then rebuild and push frontend and backend services
 32. using new scripts, create ECS services
 33. check ECS task health, ALB target health, login to Cruddur and try to create new messages
 
+## Create Dockerfile specfically for production use case
+[stream link](https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64)
+Those files were added during implementing front-end image and securing Flask application homework tasks. 
+[backend Dockerfile.prod](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/d8fe2966aa059bd692c4a0d456827f117c5926e7/backend-flask/Dockerfile.prod)
+[frontend Dockerfile.prod](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/d8fe2966aa059bd692c4a0d456827f117c5926e7/frontend-react-js/Dockerfile.prod)
 
 ## Implement Refresh Token for Amazon Cognito	
 [stream link](https://www.youtube.com/watch?v=LNLP2dxa5EQ&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=63)
@@ -794,20 +800,222 @@ Changed code units:
 * spin up GitPod
 * run /bun/ecr/login script
 * run docker-compose up
-* run db scripts: db/setup, /ddb/schema-load and seed data to local databases (PostgreSQL and DynamoDB)
-* login to Cruddur and do overall test. Perhaps implementing Cypress e2e tests could be a good idea
+* run db scripts: db/setup, /ddb/schema-load and seed data to local databases (PostgreSQL and DynamoDB). Note: I still need to add my own users to seed script with handles and emails as I set up in Cognito user pool
+* login to Cruddur and do overall test and create some messages. Perhaps implementing Cypress e2e tests could be a good idea
 	
 ## Configure task defintions to contain x-ray and turn on Container Insights
-https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64
-	
-## Change Docker Compose to explicitly use a user-defined network
-https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64
-	
-## Create Dockerfile specfically for production use case
-https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64
-	
+[stream link](https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64)
+
+### X-Ray containers
+1. add these lines into aws/task-definitions/backend-flask.json:
+```json
+    {
+      "name": "xray",
+      "image": "public.ecr.aws/xray/aws-xray-daemon" ,
+      "essential": true,
+      "user": "1337",
+      "portMappings": [
+        {
+          "name": "xray",
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ]
+    },
+```
+2. create new scripts called 'register' for backend and frontend to register updated task definitions
+3. workflow when the backend code changes
+    * ./bin/ecr/login
+    * ./bin/backend/register - when task definition got updated
+    * ./bin/backend/build
+    * ./bin/backend/push
+    * ./bin/backend/deploy
+    * ./bin/backend/run - for local debugging
+4. login to AWS Console and navigate to ECS, services, go to backend task and see xray container is running    
+5. note: I have previously commented out X-Ray code in app.py and user_activities.py as my docker images were not building
+6.  after implementing custom network and generating environment variables (follow 2 sections below first), add hostname in docker-compose file:
+```bash
+  xray-daemon:
+    hostname: xray-daemon
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+```
+7. even after implementing environment files and streamlining docker-compose file, we could not get health check on Xray working. Andrew tried netstat suggestion from StackOverflow but unfortunately it did not work out, so we left Xray health-check not implemented for now. He removed health check from backend-flask.json task definition and re-registered the task.
+8. I have reverted changes in app.py at the end of the implementation of week 6-7 as X-ray will work
+9. then run deploy of the backend task, login to AWS ECS console and see that backend is now healthy and we can access the app
+10. add same xray container definition to frontend ECS task definition json, run register and deploy scripts for it
+11. re-build backend image, push to ECR, register backend task and deploy.
+12. navigate to AWS Console -> X-ray -> traces and evidence that X-ray successfully creates segments and subsegments:
+![week6-7_xray_subseg_works](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/week6-7_xray_subseg_works.png)
+
+### Turning on Container Insights
+1. login to AWS Console -> ECS -> select cruddur cluster
+2. go to monitor tab and turn on container insights: ![turn_on_container_insights](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/turn_on_container_insights.png)
+3. login to Cruddur, check and post messages
+4. go to CloudWatch and select 'Container insights' on left hand pane. Now we shall see container insights logs:
+[https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/container_insights.png] 
+
 ## Using ruby generate out env dot files for docker using erb templates
-https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64
+[stream link](https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64)
+
+1. Initially Andrew created env files at the root of the workspace with copying env variables as they were defined in docker compose file.
+2. However, docker run scripts were not parsing variables correctly.
+3. Note: Andrew used CONNECTION_URL set to local PostgreSQL whereas I set CONNECTION_URL = PROD_CONNECTION_URL since I have not used the mock data in order to save on GitPod credits and hence didn'y run local psql container.
+4. we observed that ```--env``` in docker run scripts did not resolve environment variables referencing such as ```${GITPOD}``` but left this text as is.
+5. Hence, Andrew decided to create scripts that will transform environment variables reference and create ```.env``` files by creating Ruby scripts named ```generate-env``` in  ```bin/backend``` folder:
+```bash
+#!/usr/bin/env ruby
+
+require 'erb'
+
+template = File.read 'erb/backend-flask.env.erb'
+content = ERB.new(template).result(binding)
+filename = "backend-flask.env"
+File.write(filename, content)
+```
+6. and for ```bin/frontend``` folder:
+```bash
+#!/usr/bin/env ruby
+
+require 'erb'
+
+template = File.read 'erb/frontend-react-js.env.erb'
+content = ERB.new(template).result(binding)
+filename = "frontend-react-js.env"
+File.write(filename, content)
+```
+7. make both of the scripts executable with ```chmod u+x command```
+8. then we had to create erb templates that were placed in erb folder which was created at the root of the workspace: ```backend-flask.env.erb``` and ```frontend-react-js.env.erb```
+9. add the generated ```*.env``` files to ```.gitignore``` so passwords and secrets are not published in GitHub.
+10. change ```.gitpod.yaml``` *init* tasks to *before* tasks and add generating env files for backend:
+``` source "$THEIA_WORKSPACE_ROOT/bin/backend/generate-env" ```
+and for frontend:
+```
+source "$THEIA_WORKSPACE_ROOT/bin/frontend/generate-env"
+```
+11. edit docker run files to implement env file referencing:
+12. frontend run script:
+```bash
+#! /usr/bin/bash
+
+ABS_PATH=$(readlink -f "$0")
+BACKEND_PATH=$(dirname $ABS_PATH)
+BIN_PATH=$(dirname $BACKEND_PATH)
+PROJECT_PATH=$(dirname $BIN_PATH)
+ENVFILE_PATH="$PROJECT_PATH/frontend-react-js.env"
+
+docker run --rm \
+  --env-file $ENVFILE_PATH \
+  --network cruddur-net \
+  --publish 4567:4567 \
+  -it frontend-react-js-prod
+```
+13. backend run script:
+```bash
+#! /usr/bin/bash
+
+# I am using production RDS and DynamoDB, local databases are empty
+#--env AWS_ENDPOINT_URL="http://dynamodb-local:8000" \
+
+ABS_PATH=$(readlink -f "$0")
+BACKEND_PATH=$(dirname $ABS_PATH)
+BIN_PATH=$(dirname $BACKEND_PATH)
+PROJECT_PATH=$(dirname $BIN_PATH)
+ENVFILE_PATH="$PROJECT_PATH/backend-flask.env"
+
+docker run --rm \
+  --env-file $ENVFILE_PATH \
+  --network cruddur-net \
+  --publish 4567:4567 \
+  -it backend-flask-prod
+```
+14. run generate-env scripts
+15. specify env files in docker-compose.yml:
+```
+....
+  backend-flask:
+    env_file:
+      - backend-flask.env
+....      
+  frontend-react-js:
+    env_file:
+      - frontend-react-js.env
+....
+```
+16. create busybox script in ./bin directory, make it executable:
+```
+#! /usr/bin/bash
+
+docker run --rm \
+  --network cruddur-net \
+  --publish 4567:4567 \
+  -it busybox
+```
+17. run the script and also add /bin/bash to get into the container
+18. Andrew tried to ping google and it was succesful, but then he figured out that environment file for docker run command shall not have quotation marks for surrounding environment variables values
+19. remove quotation marks in erb templates
+20. run docker-compose up and the app shall work successfully:
+![final_test_gitpod](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/final_test_gitpod.png)
+
+## Change Docker Compose to explicitly use a user-defined network
+[stream link](https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=64)
+
+1. Looking at the Docker docs, it seems that we need to use [network in bridge mode](https://docs.docker.com/network/bridge/).
+2. We can see list of networks for our project by typing this command in GitPod terminal:
+```docker network list```
+3. Andrew used this sequence to see which network our container are connected to:
+```bash
+docker-compose up
+bin/db/setup
+bin/backend/run
+docker network list
+```
+4. We need to create our own network ```cruddur-net``` in docker-compose.yml so container services can communicate. Make sure all services connetced to this network:
+```
+...
+    build: ./backend-flask
+    ports:
+      - "4567:4567"
+    volumes:
+      - ./backend-flask:/backend-flask
+    networks:
+      - cruddur-net
+ ...
+ build: ./frontend-react-js
+    ports:
+      - "3000:3000"
+    networks:
+      - cruddur-net
+ ...
+ container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    networks:
+      - cruddur-net
+ ...
+ ports:
+      - '5432:5432'
+    networks:
+      - cruddur-net
+ ...
+       - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+    networks:
+      - cruddur-net
+# the name flag is a hack to change the default prepend folder
+# name when outputting the image names
+networks: 
+  cruddur-net:
+    driver: bridge
+    name: cruddur-net
+```    
+5. For the final clean test for this week: rebuild backend and frontend images, push and register ECS task definitions, deploy the tasks
+6. Login to AWS ECS and observe that tasks are healthy but we still need to implement X-Ray health check at some point:
+![ecs_final_test](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/ecs_test_after_gen_env.png)	
+7. login to the Cruddur app and send Londo another message about our success:
+![final_test_prod](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/a8547d0f985c12c335bd020fac11cf42abc6b3a3/_docs/assets/week7/final_test_prod.png)
 
 ## Resources
 - [AWS Samples Git Repo](https://github.com/orgs/aws-samples/repositories?language=&page=2&q=cloudformati&sort=&type=all)
@@ -819,3 +1027,5 @@ https://www.youtube.com/watch?v=G_8_xtS2MsY&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgN
 - [Tutorial: Creating a cluster with a Fargate Linux task using the AWS CLI](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_AWSCLI_Fargate.html#ECS_AWSCLI_Fargate_register_task_definition)
 - [CLI register task definition](https://docs.aws.amazon.com/cli/latest/reference/ecs/register-task-definition.html)
 -  Amazon ECS Workshop > Introduction > ECS Overview > [Task Definitions](https://ecsworkshop.com/introduction/ecs_basics/task_definition/)
+- [How to remove multiple docker images with the same imageID?](https://stackoverflow.com/questions/32944391/how-to-remove-multiple-docker-images-with-the-same-imageid)
+- [How to remove docker images based on name?](https://stackoverflow.com/questions/40084044/how-to-remove-docker-images-based-on-name)
