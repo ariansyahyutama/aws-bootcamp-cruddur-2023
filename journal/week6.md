@@ -548,11 +548,11 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 84. build frontend image:
 ```
 docker build \
---build-arg REACT_APP_BACKEND_URL="https://4567-$GITPOD_WORKSPACE_ID.$GITPOD_WORKSPACE_CLUSTER_HOST" \
---build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
+--build-arg REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
+--build-arg REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}" \
 --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
---build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_vBKMcxpJ9" \
---build-arg REACT_APP_CLIENT_ID="7tp9c32crfu6hk1rdk43qiah33" \
+--build-arg REACT_APP_AWS_USER_POOLS_ID: "us-east-1_FT8fMhdtT" \
+--build-arg REACT_APP_CLIENT_ID: "6iklq9ja16ufp13hj5jj8trusr" \
 -t frontend-react-js \
 -f Dockerfile.prod \
 .
