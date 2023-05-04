@@ -534,11 +534,17 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 ## Create ECR repo and push image for fronted-react-js	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 78. create file frontend-react-js.json in task-definitions folder (GitPod) - get one from Andrews week6-fargate branch
+
 79. create Dockerfile.prod for frontend-react-js container. We will be using multi-stage build for frontend container
+
 80. create file nginx.conf file in the frontend-react-js folder
+
 81. cd frontend-react-js in terminal
+
 82. run ```npm run build``` -> ignore warnings (for now)
+
 83. add build folder into .gitignore
+
 84. build frontend image:
 ```
 docker build \
