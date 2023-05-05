@@ -611,16 +611,17 @@ aws ecs register-task-definition --cli-input-json file://aws/task-definitions/fr
 ```
 aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-js.json
 ```
+make sure that the load balancer codes available
 97. however the service is failing. Andrew built a local image without ALB. Then he tried to inspect this container.
 98. NOT REQUIRED: go to the frontend target group and override port for health check to 3000 - no need for that
 99. add port 3000 for inbound rule for crud-srv-sg security group allowing ALB security group to access it on port 3000
 100. create ECS frontend service again via CLI
-101. now we see both services running healthy: 
-102. ![ecs_2_services](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/374f1d75359de55034a3bbf3e4d482b5c34792e8/_docs/assets/ecs_2_service_running.png)
+
 103. go to the load balancer and copy its DNS name
 104. copy the DNS name to Chrome and append with :3000
 105. woohoo! Cruddur web site is now loaded with data!
-![cruddur_behind_alb](https://github.com/olleyt/aws-bootcamp-cruddur-2023/blob/374f1d75359de55034a3bbf3e4d482b5c34792e8/_docs/assets/cruddur_fargate.png)
+![cruddur_behind_alb](![image](https://user-images.githubusercontent.com/67248935/236454987-03c2bafa-c3d1-4347-82fd-c157c338e04c.png)
+)
 105. tear down ALB and ECS tasks for cost savings. stop RDS
 
 ## Provision and configure Application Load Balancer along with target groups	
@@ -629,7 +630,7 @@ was done in previous section from step 61
 	
 ## Manage your domain useing Route53 via hosted zone	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
-My domain was bought via Amazon Route 53 service, and AWS automatically created a hosted zone with NS and SOA records
+My domain was bought via godaddy , I migrate the NS to route53
 	
 ## Create an SSL cerificate via ACM	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
