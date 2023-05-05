@@ -1,5 +1,5 @@
 {
-    "family": "backend-flask",
+    "family": "frontend-react-js",
     "executionRoleArn": "arn:aws:iam::776552123053:role/CruddurServiceExecutionRole",
     "taskRoleArn": "arn:aws:iam::776552123053:role/CruddurTaskRole",
     "networkMode": "awsvpc",
@@ -24,7 +24,7 @@
       },
       {
         "name": "frontend-react-js",
-        "image": "387543059434.dkr.ecr.ca-central-1.amazonaws.com/frontend-react-js",
+        "image": "776552123053.dkr.ecr.us-east-1.amazonaws.com/frontend-react-js",
         "essential": true,
         "healthCheck": {
           "command": [
@@ -49,7 +49,7 @@
             "options": {
                 "awslogs-group": "cruddur",
                 "awslogs-region": "us-east-1",
-                "awslogs-stream-prefix": "backend-flask"
+                "awslogs-stream-prefix": "frontend-reach-js"
             }
         }
 
