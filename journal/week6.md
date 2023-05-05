@@ -588,11 +588,11 @@ docker run --rm -p 3000:3000 -it frontend-react-js
 92. in order to avoid CORS issues, we need to rebuild the image with the load balancer DNS name, not local GitPod URL
 ```
 docker build \
---build-arg REACT_APP_BACKEND_URL="http://cruddur-alb-1822031801.us-east-1.elb.amazonaws.com:4567" \
+--build-arg REACT_APP_BACKEND_URL="http://cruddur-alb-2101047041.us-east-1.elb.amazonaws.com:4567" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
---build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_vBKMcxpJ9" \
---build-arg REACT_APP_CLIENT_ID="7tp9c32crfu6hk1rdk43qiah33" \
+--build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_FT8fMhdtT" \
+--build-arg REACT_APP_CLIENT_ID="6iklq9ja16ufp13hj5jj8trusr" \
 -t frontend-react-js \
 -f Dockerfile.prod \
 .
