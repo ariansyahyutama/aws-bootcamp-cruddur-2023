@@ -625,12 +625,12 @@ make sure that the load balancer codes available
 105. tear down ALB and ECS tasks for cost savings. stop RDS
 
 ## Provision and configure Application Load Balancer along with target groups	
-[stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
-was done in previous section from step 61
+
+was done in previous section from step 61, but we need to create/define the loadbalancer in ECS service, unless the target will not be registered
 	
 ## Manage your domain useing Route53 via hosted zone	
-[stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
-My domain was bought via godaddy , I migrate the NS to route53
+
+My domain was bought via godaddy , I migrate the NS to route53, create a hosted zone called `ghur.online` add a copied the NS from go daddy and added to the hosted zone
 	
 ## Create an SSL cerificate via ACM	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
