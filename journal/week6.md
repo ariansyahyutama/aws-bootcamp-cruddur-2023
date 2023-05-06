@@ -657,6 +657,8 @@ My domain was bought via godaddy , I migrate the NS to route53, create a hosted 
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 1. go to Route 53, choose our hosted zone
 2. add A record for naked domain routing to ALB
+<img width="1276" alt="image" src="https://user-images.githubusercontent.com/67248935/236602138-7b18facc-ba10-49e9-9200-c6682c13f425.png">
+
 	
 	
 ## Setup a record set for api subdomain to point to the backend-flask 
