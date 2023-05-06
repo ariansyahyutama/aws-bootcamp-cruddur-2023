@@ -652,6 +652,8 @@ My domain was bought via godaddy , I migrate the NS to route53, create a hosted 
 15. delete listeners for ports 4567 and 3000
 16. choose listener for port 443 and click on Actions and select Manage Rules
 17. add a rule under host header and put value ```api.<yourdomain>``` in field 'is' and forward traffic to backend target group
+18. <img width="1279" alt="image" src="https://user-images.githubusercontent.com/67248935/236618222-19cd1e14-afa3-4b9a-9319-6b1153668871.png">
+
 	
 ## Setup a record set for naked domain to point to frontend-react-js 
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
