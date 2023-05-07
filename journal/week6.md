@@ -622,15 +622,14 @@ make sure that the load balancer codes available
 105. woohoo! Cruddur web site is now loaded with data!
 ![cruddur_behind_alb](![image](https://user-images.githubusercontent.com/67248935/236454987-03c2bafa-c3d1-4347-82fd-c157c338e04c.png)
 )
-105. tear down ALB and ECS tasks for cost savings. stop RDS
 
-## Provision and configure Application Load Balancer along with target groups	
-
-was done in previous section from step 61, but we need to create/define the loadbalancer in ECS service, unless the target will not be registered
 	
-## Manage your domain useing Route53 via hosted zone	
+## Manage your domain using Route53 via hosted zone	
 
-My domain was bought via godaddy , I migrate the NS to route53, create a hosted zone called `ghur.online` add a copied the NS from go daddy and added to the hosted zone
+My domain was bought via godaddy , I migrate the NS to route53, create a hosted zone called `ghur.online` add a copied the NS from go daddy and added NS record on ghur.online hosted zone
+1. add naked A record for ghur.online pointing to ALB
+2. add api.ghur.online pointing ALB
+3. on ALb level, manage the listerner rule, head header api.ghur.online to backend_TG else frontend_TG
 	
 ## Create an SSL cerificate via ACM	
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
@@ -645,8 +644,7 @@ My domain was bought via godaddy , I migrate the NS to route53, create a hosted 
 8. click on the created certificate and on Domains frame click 'Create records in Route 53'
 9. in the new window, click 'Create Records' button
 10. go back to Route 53 , and see that CNAME record was added to the hosted zone
-11. wait a little while and see that records have 'Success' status on the certificate
-12. we probably shall enable DNSSSEC at some point
+11. wait a little while and see that records have 'Success' status on the certificatet
 13. go back to our load balancer, and create a new listener on port 80 and add redirect it to 443
 14. add a new listener for port 443 and a forward rule to frontend target group. Choose default SSL/TLS certificate
 15. delete listeners for ports 4567 and 3000
@@ -667,18 +665,16 @@ My domain was bought via godaddy , I migrate the NS to route53, create a hosted 
 https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59
 1. go to Route 53, choose our hosted zone
 2. add A record for api sub domain routing to ALB
-3. run curl command
-```
-curl api.architectingonaws.link/api/health-check
+3. result
 
-```
-or post in the browser: https://api.architectingonaws.link/api/health-check
-returns:
-```
-{
-  "success": true
-}
-```
+a. to the front end
+
+<img width="1260" alt="image" src="https://user-images.githubusercontent.com/67248935/236651976-5807c4b3-3165-457a-a47e-4acc85dcd6fe.png">
+
+b. too the backend
+
+<img width="1028" alt="image" src="https://user-images.githubusercontent.com/67248935/236651988-0912f384-c67b-4b32-981b-cc3f964be695.png">
+
 	
 	
 ## Configure CORS to only permit traffic from our domain 	
