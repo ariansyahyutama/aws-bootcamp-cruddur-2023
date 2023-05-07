@@ -686,7 +686,7 @@ b. too the backend
 	
 2. run command to create a new revision for this task definition:
 ```
-aws ecs register-task-definition --cli-input-json file://aws/task-definitions/backend-flask.json
+aws ecs register-task-definition --cli-input-json file://aws/task-definition/backend-flask.json
 ```
 3. login to ECR
 4. build front-end image and change ```REACT_APP_BACKEND_URL="https://api.ghur.online"```
@@ -701,6 +701,7 @@ docker build \
 -f Dockerfile.prod \
 .	
 ```
+WITHOUT HTTPS WE ARE GOING TO HAVE CORS ERROR
 5. tag and push this image
 6. update backend ECS service with the latest task definition revision (AWS Console)	
 7. force update existing frontend ECS service
