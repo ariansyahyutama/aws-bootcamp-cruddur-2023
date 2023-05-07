@@ -681,22 +681,22 @@ b. too the backend
 [stream link](https://www.youtube.com/watch?v=HHmpZ5hqh1I&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=59)
 
 1. go to ```backend-flask.json``` task definition and change these two lines to specifc domains:
-```{"name": "FRONTEND_URL", "value": "https://architectingonaws.link"},```
-```{"name": "BACKEND_URL", "value": "https://api.architectingonaws.link"}```
+```{"name": "FRONTEND_URL", "value": "https://ghur.online"},```
+```{"name": "BACKEND_URL", "value": "https://api.ghur.online"}```
 	
 2. run command to create a new revision for this task definition:
 ```
 aws ecs register-task-definition --cli-input-json file://aws/task-definitions/backend-flask.json
 ```
 3. login to ECR
-4. build front-end image and change ```REACT_APP_BACKEND_URL="https://api.architectingonaws.link"```
+4. build front-end image and change ```REACT_APP_BACKEND_URL="https://api.ghur.online"```
 ```
 docker build \
---build-arg REACT_APP_BACKEND_URL="https://api.architectingonaws.link" \
+--build-arg REACT_APP_BACKEND_URL="https://api.ghur.online" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
 --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
---build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_vBKMcxpJ9" \
---build-arg REACT_APP_CLIENT_ID="7tp9c32crfu6hk1rdk43qiah33" \
+--build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_FT8fMhdtT" \
+--build-arg REACT_APP_CLIENT_ID="6iklq9ja16ufp13hj5jj8trusr" \
 -t frontend-react-js \
 -f Dockerfile.prod \
 .	
@@ -705,8 +705,8 @@ docker build \
 6. update backend ECS service with the latest task definition revision (AWS Console)	
 7. force update existing frontend ECS service
 8. check that both targets groups are healthy
-9. check backend health-check in the browser: ```https://api.architectingonaws.link/api/health-check```	
-10. check website: ```https://architectingonaws.link```
+9. check backend health-check in the browser: ```https://api.ghur.online/api/health-check```	
+10. check website: ```https://api.ghur.online```
 11. we can see CORS errors in Network tab of developer tools in Chrome
 12. connect to ECS service from the terminal in Gitpod, type env to check environment variables
 13. Andrew added protocol ```https://``` in FRONTEND_URL and BACKEND_URL in backend-flask.json task definition as attempt to rectify the CORS issue. He updated task definition and updated the back-end service. It worked for him so I updated step 1 of this section.
