@@ -739,7 +739,6 @@ WITHOUT HTTPS WE ARE GOING TO HAVE CORS ERROR
 docker run --rm \
 -p 4567:4567 \
 --env AWS_ENDPOINT_URL="http://dynamodb-local:8000" \
-#--env CONNECTION_URL="postgresql://postgres:password@db:5432/cruddur" \
 --env CONNECTION_URL="${PROD_CONNECTION_URL}"
 --env FRONTEND_URL="https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
 --env BACKEND_URL="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" \
@@ -753,7 +752,7 @@ docker run --rm \
 --env AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
 --env ROLLBAR_ACCESS_TOKEN="${ROLLBAR_ACCESS_TOKEN}" \
 --env AWS_COGNITO_USER_POOL_ID="${AWS_COGNITO_USER_POOL_ID}" \
---env AWS_COGNITO_USER_POOL_CLIENT_ID="5b6ro31g97urk767adrbrdj1g5" \   
+--env AWS_COGNITO_USER_POOL_CLIENT_ID="${AWS_COGNITO_USER_POOL_CLIENT_ID}" \   
 -it backend-flask-prod
 ```
 Note: links to local databases need a revision on my side
