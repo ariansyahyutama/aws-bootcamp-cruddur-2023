@@ -703,15 +703,25 @@ docker build \
 ```
 WITHOUT HTTPS WE ARE GOING TO HAVE CORS ERROR
 5. tag and push this image
+
 6. update backend ECS service with the latest task definition revision (AWS Console)	
+
 7. force update existing frontend ECS service
+
 8. check that both targets groups are healthy
+
 9. check backend health-check in the browser: ```https://api.ghur.online/api/health-check```	
+
 10. check website: ```https://api.ghur.online```
+
 11. we can see CORS errors in Network tab of developer tools in Chrome
+
 12. connect to ECS service from the terminal in Gitpod, type env to check environment variables
+
 13. Andrew added protocol ```https://``` in FRONTEND_URL and BACKEND_URL in backend-flask.json task definition as attempt to rectify the CORS issue. He updated task definition and updated the back-end service. It worked for him so I updated step 1 of this section.
+
 14. sign in into Cruddur and try to create a Crud
+
 15. go to messages and create a new message appending ```/messages/new/@handleofuser```. Andrew hit the 500 error but it worked for me.	
 	
 ## Secure Flask by not running in debug mode 	
