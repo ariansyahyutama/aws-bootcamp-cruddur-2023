@@ -16,4 +16,10 @@ aws ecs update-service --cluster $CLUSTER_NAME \
  --force-new-deployment
 
 
+ aws ecs describe-services \
+ --cluster $CLUSTER_NAME \
+ --services $SERVICE_NAME --query 'services[0].deployments' --output table
+
+
+
 
