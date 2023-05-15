@@ -1,0 +1,12 @@
+#! /usr/bin/bash
+
+ABH_PATH=$(readlink -f "$0")
+PARENT_DIR="$(dirname "$ABH_PATH")"
+PARENT_DIR_1="$(dirname "$PARENT_DIR")"
+PARENT_DIR_2="$(dirname "$PARENT_DIR_1")"
+PARENT_DIR_3="$(dirname "$PARENT_DIR_2")"
+#PARENT_DIR_4="$(dirname "$PARENT_DIR_3")"
+echo $PARENT_DIR_3
+
+aws ecs register-task-definition \
+--cli-input-json "file://$PARENT_DIR_3/aws/task-definition/backend-flask.json"
