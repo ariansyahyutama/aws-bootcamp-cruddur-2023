@@ -24,6 +24,8 @@ I COPIED FROM ANNLEEFORES, DO IT ONLY FOR LEARNING PURPOSE DUE TO I HAVE LIMITED
 
 CDK (Cloud Development Kit) is an Infrastructure as Code (IaC) tool owned by AWS that allows users to define infrastructure or cloud resources in their programming language of choice. CDK synth converts CDK to CloudFormation templates, and it is built on top of CFN. It supports TypeScript, Python, Java, .NET, and Go. CDK constructs are the basic building blocks of AWS CDK apps, and they encapsulate everything AWS CloudFormation needs to create the component. There are L1, L2, and L3 constructs, with L3 being the most complex. CFN knowledge is helpful but not necessary. CDK can be used with other IaC tools like AWS SAM, Terraform, and Kubernetes. CDK is good for minimizing CFN code. The CDK base library is written in TypeScript and uses jsii to convert the library for other languages. There are resources available to get started with CDK, such as the [official getting started guide](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html), CDK book, [constructs.dev](https://constructs.dev/), and [cdkpatterns.com](http://cdkpatterns.com/)
 
+- create a directory 'thumbing-serverless-cdk' in backend 
+
 ### Bootstrap
 
 The Bootstrap process is necessary to provision AWS resources before deploying CDK apps. Each region needs to be bootstrapped to your account. To do this, run
