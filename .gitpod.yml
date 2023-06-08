@@ -34,7 +34,7 @@ tasks:
 
   - name: cdk
     before: |
-      cd thumbing-serverless-cdk
+      cd thumbing-serverlsess-cdk #wrong typo expected
       cp .env.example .env
       npm i
       npm install aws-cdk -g
