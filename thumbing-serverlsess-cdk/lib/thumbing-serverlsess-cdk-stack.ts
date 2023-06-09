@@ -4,6 +4,9 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 
+const dotenv = require('dotenv')
+dotenv.config();
+
 export class ThumbingServerlsessCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
