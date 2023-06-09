@@ -34,7 +34,7 @@ tasks:
 
   - name: sharp and clients3
     command: |
-      cd aws/lambdas/process-images
+      cd aws/lambda/process-images
       npm i sharp
       npm i @aws-sdk/client-s3
 
