@@ -32,13 +32,20 @@ tasks:
       sudo dpkg -i session-manager-plugin.deb
       cd backend-flask
 
+  - name: sharp and clients3
+    command: |
+      cd aws/lambdas/process-images
+      npm i sharp
+      npm i @aws-sdk/client-s3
+
   - name: cdk
     before: |
       cd thumbing-serverlsess-cdk #wrong typo expected
       cp .env.example .env
       npm i
       npm install aws-cdk -g
-      
+  
+
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
