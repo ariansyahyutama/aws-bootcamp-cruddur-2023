@@ -4,6 +4,10 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 
+import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
+
+this.createS3NotifyToLambda(folderInput,lambda,bucket);
+
 const dotenv = require('dotenv')
 dotenv.config();
 
@@ -50,4 +54,15 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     })
     return lambdaFunction;
   }
+}
+
+
+
+createS3NotifyToLambda(prefix: string, lambda: lambda.IFunction, bucket: s3.IBucket): void {
+  const destination = new s3n.LambdaDestination(lambda);
+  bucket.addEventNotification(
+   s3.EventType.OBJECT_CREATED_PUT,
+   destination,
+   {prefix: prefix} // folder to contain the original images 
+  )
 }

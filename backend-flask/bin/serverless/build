@@ -11,6 +11,6 @@ SERVERLESS_PROJECT_PATH="$PARENT_DIR_3/thumbing-serverlsess-cdk"
 echo $SERVERLESS_PROJECT_PATH
 cd $SERVERLESS_PROJECT_PATH
 
-#npm install
-#rm -rf node_modules/sharp
-#SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc-glibc sharp
+npm install
+rm -rf node_modules/sharp
+SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc-glibc sharp
