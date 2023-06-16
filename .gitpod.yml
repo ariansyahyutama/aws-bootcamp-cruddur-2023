@@ -38,9 +38,15 @@ tasks:
       npm i sharp
       npm i @aws-sdk/client-s3
 
+  - name: install serverless 
+    command: |
+      cd backend-flask/bin
+      ./serverless/build
+
+
   - name: cdk
     before: |
-      cd thumbing-serverlsess-cdk #wrong typo expected
+      cd thumbing-serverlsess-cdk 
       cp .env.example .env
       npm i
       npm install aws-cdk -g
