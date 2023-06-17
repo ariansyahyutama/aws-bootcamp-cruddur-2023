@@ -50,8 +50,8 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     this.createSnsSubscription(snsTopic,webhookUrl)
 
     //Add S3 event notifications
-    this.createS3NotifyToLambda(folderInput,lambda,uploadsBucket)
-    this.createS3NotifyToSns(folderOutput,snsTopic,bucket)
+    this.createS3NotifyToLambda(folderInput,lambda,bucket)
+    //this.createS3NotifyToSns(folderOutput,snsTopic,bucket)
 
   }
 
