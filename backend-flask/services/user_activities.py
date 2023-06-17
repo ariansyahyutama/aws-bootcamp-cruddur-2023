@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from aws_xray_sdk.core import xray_recorder
+from lib.db import db
+
 class UserActivities:
   def run(user_handle):
     try:
