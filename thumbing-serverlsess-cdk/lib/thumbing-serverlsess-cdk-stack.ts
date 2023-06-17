@@ -7,6 +7,9 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
 import * as iam from 'aws-cdk-lib/aws-iam';
 
+import * as sns from 'aws-cdk-lib/aws-sns';
+import * as subscriptions from 'aws-cdk-lib/aws-sns-subscriptions';
+
 
 
 const dotenv = require('dotenv')
@@ -20,7 +23,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     super(scope, id, props);
 
     // The code that defines your stack goes here
-
+    const uploadsBucketName: string = process.env.UPLOADS_BUCKET_NAME as string;
     const bucketName: string = process.env.THUMBING_BUCKET_NAME as string;
     const folderInput: string = process.env.THUMBING_S3_FOLDER_INPUT as string;
     const folderOutput: string = process.env.THUMBING_S3_FOLDER_OUTPUT as string;
@@ -28,12 +31,27 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     const topicName: string = process.env.THUMBING_TOPIC_NAME as string;
     const functionPath: string = process.env.THUMBING_FUNCTION_PATH as string;
 
+    const uploadsBucket = this.createBucket(uploadsBucketName);
     const bucket = this.importBucket(bucketName); //this.createBucket(bucketName);
-    const lambda = this.createLambda(functionPath, bucketName, folderInput, folderOutput);
-    this.createS3NotifyToLambda(folderInput,lambda,bucket);
+
+    const lambda = this.createLambda(functionPath, uploadsBucketName, bucketName, folderInput, folderOutput);
+
+    //this.createS3NotifyToLambda(folderInput,lambda,bucket);
 
     const s3ReadWritePolicy = this.createPolicyBucketAccess(bucket.bucketArn)
+    const s3ReadWritePolicyUpload = this.createPolicyBucketAccess(uploadsBucket.bucketArn)
+
+
     lambda.addToRolePolicy(s3ReadWritePolicy);
+    lambda.addToRolePolicy(s3ReadWritePolicyUpload);
+
+    // create sns topic and subscription
+    const snsTopic = this.createSnsTopic(topicName)
+    this.createSnsSubscription(snsTopic,webhookUrl)
+
+    //Add S3 event notifications
+    this.createS3NotifyToLambda(folderInput,lambda,uploadsBucket)
+    this.createS3NotifyToSns(folderOutput,snsTopic,bucket)
 
   }
 
@@ -50,13 +68,13 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     return s3ReadWritePolicy;
   }
   
-  //createBucket(bucketName: string): s3.IBucket {
-  //  const bucket = new s3.Bucket(this, "UploadBucket", {
-  //    bucketName: bucketName,
-  //    removalPolicy: cdk.RemovalPolicy.DESTROY,
-  //  });
-  //  return bucket;
-  //}
+  createBucket(bucketName: string): s3.IBucket {
+    const bucket = new s3.Bucket(this, 'UploadsBucket', {
+      bucketName: bucketName,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    return bucket;
+  }
 
   importBucket(bucketName:string): s3.IBucket {
     const bucket = s3.Bucket.fromBucketName(this, "AssetsBucket", bucketName);
@@ -64,7 +82,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
   }
 
 
-  createLambda(functionPath:string, bucketName:string, folderInput:string, folderOutput:string): lambda.IFunction {
+  createLambda(functionPath:string, uploadsBucketName:string, bucketName:string, folderInput:string, folderOutput:string): lambda.IFunction {
 
     const lambdaFunction = new lambda.Function(this, 'ThumbLambda', {
       runtime: lambda.Runtime.NODEJS_18_X,
@@ -89,6 +107,32 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
      //{prefix: prefix} // folder to contain the original images 
     )
   }
+
+  createSnsTopic(topicName: string): sns.ITopic{
+    const logicalName = "ThumbingTopic";
+    const snsTopic = new sns.Topic(this, logicalName, {
+      topicName: topicName
+    });
+    return snsTopic;
+  }
+
+  createSnsSubscription(snsTopic: sns.ITopic, webhookUrl: string): sns.Subscription {
+    const snsSubscription = snsTopic.addSubscription(
+      new subscriptions.UrlSubscription(webhookUrl)
+    )
+    return snsSubscription;
+  }
+
+  createS3NotifyToSns(prefix: string, snsTopic: sns.ITopic, bucket: s3.IBucket): void {
+    const destination = new s3n.SnsDestination(snsTopic)
+    bucket.addEventNotification(
+      s3.EventType.OBJECT_CREATED_PUT, 
+      destination,
+      {prefix: prefix}
+    );
+  }
+
+
 }
 
 
