@@ -10,6 +10,7 @@ import EditProfileButton from '../components/EditProfileButton';
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
+import {checkAuth, getAccessToken} from '../lib/CheckAuth';
 
 export default function UserFeedPage() {
   const [activities, setActivities] = React.useState([]);
