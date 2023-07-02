@@ -1,0 +1,16 @@
+#! /usr/bin/bash
+
+ABH_PATH=$(readlink -f "$0")
+PARENT_DIR="$(dirname "$ABH_PATH")"
+PARENT_DIR_1="$(dirname "$PARENT_DIR")"
+PARENT_DIR_2="$(dirname "$PARENT_DIR_1")"
+PARENT_DIR_3="$(dirname "$PARENT_DIR_2")"
+#PARENT_DIR_4="$(dirname "$PARENT_DIR_3")"
+
+SERVERLESS_PROJECT_PATH="$PARENT_DIR_3/thumbing-serverlsess-cdk"
+echo $SERVERLESS_PROJECT_PATH
+cd $SERVERLESS_PROJECT_PATH
+
+npm install
+rm -rf node_modules/sharp
+SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc-glibc sharp
