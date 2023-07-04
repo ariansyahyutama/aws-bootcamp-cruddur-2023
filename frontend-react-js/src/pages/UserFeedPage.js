@@ -65,10 +65,7 @@ export default function UserFeedPage() {
         <ActivityForm popped={popped} setActivities={setActivities} />
       
         <div className='activity_feed'>
-          <div className='activity_feed_heading'>
-            <div className='title'>{profile.display_name}</div>
-            <div className='cruds_count'>{profile.cruds_count} Cruds</div>
-          </div>
+          <ProfileHeading setPopped={setPoppedProfile} profile={profile} />
           <ActivityFeed activities={activities} />
         </div>
       </div>
