@@ -8,6 +8,7 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import EditProfileButton from '../components/EditProfileButton';
 import ProfileHeading from '../components/ProfileHeading';
+import ProfileForm from '../components/ProfileForm';
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
