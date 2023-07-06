@@ -5,6 +5,7 @@ SELECT
 
       users.handle,
       users.display_name,
+      users.bio,
  
       (
        SELECT 
