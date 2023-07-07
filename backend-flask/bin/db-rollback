@@ -8,7 +8,8 @@ import time
 import importlib
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-parent_path = os.path.abspath(os.path.join(current_path, '..', '..','backend-flask'))
+parent_path = os.path.abspath(os.path.join(current_path, "..")) #expected path backend-flask
+
 sys.path.append(parent_path)
 from lib.db import db
 
@@ -31,7 +32,8 @@ def set_last_successful_run(value):
 
 last_successful_run = get_last_successful_run()
 
-migrations_path = os.path.abspath(os.path.join(current_path, '..', '..','backend-flask','db','migrations'))
+migrations_path = os.path.abspath(os.path.join(current_path, '..','bin','db','migrations'))
+
 sys.path.append(migrations_path)
 migration_files = glob.glob(f"{migrations_path}/*")
 
