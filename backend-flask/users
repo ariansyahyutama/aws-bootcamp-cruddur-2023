@@ -1,0 +1,22 @@
+insert into public.scheme_information (id, last_successful_run) values(1, '0') on conflict (id) do nothing
+;
+insert into public.schema_information (id, last_successful_run) values(1, '0') on conflict (id) do nothing
+;
+select * from schema_information;
+insert into public.schema_information (id, last_successful_run) values(1, '0') on conflict (id) do nothing
+;
+select * from schema_information;
+/q
+\q
+alter table public.users drop column bio;
+alter table public.users add column bio;
+alter table public.users add column bio text;
+alter table public.users drop column bio;
+/q
+\q
+select * from schema_information;
+quiy
+quit
+\q
+select * from schema_information;
+\s users

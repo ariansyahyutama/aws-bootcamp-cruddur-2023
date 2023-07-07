@@ -13,7 +13,7 @@ export default function ProfileForm(props) {
     setDisplayName(props.profile.display_name);
   }, [props.profile])
 
-  const onsubmit = async (event) => {
+  const onsubmit = async (event)=> {
     event.preventDefault();
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/profile/update`
