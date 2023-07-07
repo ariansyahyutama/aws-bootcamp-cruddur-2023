@@ -17,6 +17,6 @@ class UserActivities:
             sql = db.template("users", "show")
             results = db.query_object_json(sql, {'handle': user_handle})
             print('results',results)
-            model["data"] = results
+            model['data'] = results
 
         return model

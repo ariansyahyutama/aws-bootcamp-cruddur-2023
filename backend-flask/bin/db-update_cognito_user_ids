@@ -25,6 +25,7 @@ def update_users_with_cognito_user_id(handle,sub):
 
 def get_cognito_user_ids():
   userpool_id = os.getenv("AWS_COGNITO_USER_POOL_ID")
+  print("user pool id:",userpool_id)
   client = boto3.client('cognito-idp')
   params = {
     'UserPoolId': userpool_id,
@@ -52,3 +53,15 @@ for handle, sub in users.items():
     handle=handle,
     sub=sub
   )
+
+
+ # UPDATE public.users
+ #   SET cognito_user_id = '8e3f81af-3531-498d-bee4-e75743dfa85c'
+ #   WHERE
+ #     users.handle = 'ariansyahy';
+
+
+ # UPDATE public.users
+  #  SET cognito_user_id = '19e76dc2-8d0a-4259-a8c0-0402cf89d732'
+   # WHERE
+    #  users.handle = 'andrewbrown';
