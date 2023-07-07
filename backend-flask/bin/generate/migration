@@ -39,7 +39,7 @@ migration = AddBioColumnMigration
 file_content = file_content.lstrip('\n').rstrip('\n')
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.abspath(os.path.join('db','migrations',filename))
+file_path = os.path.abspath(os.path.join('bin','db','migrations',filename))
 
 with open(file_path, 'w') as f:
   f.write(file_content)
