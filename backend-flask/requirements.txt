@@ -17,5 +17,6 @@ watchtower
 psycopg[binary]
 psycopg[pool]
 
+boto3 
 
 Flask-AWSCognito
