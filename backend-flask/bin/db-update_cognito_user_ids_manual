@@ -1,0 +1,7 @@
+#! /usr/bin/bash
+
+URL=$CONNECTION_URL
+
+psql $URL -c "UPDATE public.users SET cognito_user_id = '8e3f81af-3531-498d-bee4-e75743dfa85c' WHERE users.handle = 'ariansyahy';"
+psql $URL -c "UPDATE public.users SET cognito_user_id = '19e76dc2-8d0a-4259-a8c0-0402cf89d732' WHERE users.handle = 'andrewbrown';"
+

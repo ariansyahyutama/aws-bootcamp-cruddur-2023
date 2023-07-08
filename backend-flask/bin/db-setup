@@ -12,5 +12,6 @@ source "$bin_path/db-drop"
 source "$bin_path/db-create"
 source "$bin_path/db-schema-load"
 source "$bin_path/db-seed-load"
-
-python "$bin_path/db-update_cognito_user_ids"
+source "$bin_path/db-update_cognito_user_ids_manual"
+#python "$bin_path/db-update_cognito_user_ids"
+#source  ""$bin_path/generate/migration" 
