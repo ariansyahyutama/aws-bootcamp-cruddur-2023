@@ -1,7 +1,7 @@
 # Week 0 — Billing and Architecture
 
 in this week-0,  
-* we are going to create conceptual, logical and physical design. I created the designs by using free lucid chart version.
+* We are going to create conceptual, logical and physical design. I created the designs by using free lucid chart version.
 * Setting up AWS account including IAM user and Gropus (I have the account already few months before the bootcampt was started)
 * Setting up Gitpod
 * setting budget and alarm
