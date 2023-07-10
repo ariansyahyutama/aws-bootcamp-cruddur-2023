@@ -1,17 +1,17 @@
 # Week 0 — Billing and Architecture
 
-ovarall on this week-0,  
-* we are going to create contextual and logical design, I decided to skip contextual one but I created the logical design by using free lucid chart version.
-* I tried to put anything on my thougt,the design it self maybe doesn't perpect but I tried my best
+in this week-0,  
+* we are going to create conceptual, logical and physical design. I created the designs by using free lucid chart version.
+* Setting up AWS account including IAM user and Gropus (I have the account already few months before the bootcampt was started)
+* Setting up Gitpod
+* setting budget and alarm
 
 ## Architecture Diagram
 
 I added CI/CD pipiline in the diagram, one of the function of the pipiline is to automate the deployment of ECS.
-I put API gatewat so the client in internet will communicate with the API gateway first, also I included the ACM for the certificate manager.
+I put API gateway so the client in internet will communicate with the API gateway first, also I included the ACM for the certificate manager.
 
 ![Cloud Architecture (5)](https://user-images.githubusercontent.com/67248935/219820447-2dff8a51-0566-4289-abad-c3277708b207.jpeg)
-
-
 
 source : 
 https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_loc=-3163%2C98%2C937%2C974%2C0_0&invitationId=inv_1369f12b-7802-4162-a901-35cb4ae95af2
