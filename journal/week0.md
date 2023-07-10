@@ -5,8 +5,11 @@ in this week-0,
 * Setting up AWS account including IAM user and Gropus (I have the account already few months before the bootcampt was started)
 * Setting up Gitpod
 * setting budget and alarm
+* 
+## Conceptual Design
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/3b4b94d7-266b-4eb7-b878-8082bab1d71b)
 
-## Architecture Diagram
+## Logical Design
 
 I added CI/CD pipiline in the diagram, one of the function of the pipiline is to automate the deployment of ECS.
 I put API gateway so the client in internet will communicate with the API gateway first, also I included the ACM for the certificate manager.
