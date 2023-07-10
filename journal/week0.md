@@ -1,5 +1,7 @@
 # Week 0 — Billing and Architecture
 
+ovarall on this week-0,  we are going to create contextual and logical design, I decided to skip contextual one but I created the logical design by using free lucid chart version. I tried to put anything on my thougt,the design it self maybe doesn't perpect but I tried my best
+
 ## Architecture Diagram
 
 I added CI/CD pipiline in the diagram, one of the function of the pipiline is to automate the deployment of ECS.
