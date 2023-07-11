@@ -148,9 +148,8 @@ We need to update the configuration json script with the TopicARN(refer to SNS -
         "arn:aws:sns:us-east-1:776552123053:billing-alarm"
     ]`
 
-```sh
-
 follwoing are the detail of alarm_config.json
+
 ```
 {
     "AlarmName": "DailyEstimatedCharges",
