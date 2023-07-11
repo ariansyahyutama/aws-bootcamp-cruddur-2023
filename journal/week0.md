@@ -1,11 +1,11 @@
 # Week 0 — Billing and Architecture
 
-in this week-0,  
-* We are going to create conceptual, logical and physical design. I created the designs by using free lucid chart version.
+following are quick summary about week-0:  
+* We are going to create conceptual, logical and physical design. I created the designs by using free lucid chart version and handwriting for conceptual diagram
 * Setting up AWS account including IAM user and Gropus (I have the account already few months before the bootcampt was started)
 * Setting up Gitpod
-* setting budget and alarm
-* 
+* Setting budget and alarm
+  
 ## Conceptual Design
 I should not put a specific service in the conceptual design, general infomation for example Storage, Authentication or CDN should be good.
 ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/3b4b94d7-266b-4eb7-b878-8082bab1d71b)
@@ -22,7 +22,7 @@ https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_
 
 
 ## Budget Limit 
-I put daily budget monitoring max USD 5 and monthly max  USD 20, one day I got charge up to 80 USD.
+I put daily budget monitoring max USD 5 and monthly max  USD 20 since I had a bad experience one day so I was charged up to 80 USD.
 
 ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/6ab254dd-9201-457f-be10-c06fda139acd)
 
@@ -104,6 +104,7 @@ content of budget-notifications.json are below
 ```
 
 ## Add user on IAM
+avoid using root account to access the AWS account
 
 ![image](https://user-images.githubusercontent.com/67248935/218676966-fe2422cf-8858-4ee2-a639-728da1820ed6.png)
 
