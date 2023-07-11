@@ -37,7 +37,8 @@ aws sts get-caller-identity --query Account --output text
 ```
 the output will be our AWS account ID as follows
 
-![Alt text](image.png)
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/ee42d8b9-06b2-43ba-9352-25482da3ed8e)
+
 
 next we are going to deploy our aws budget by using AWS CLI.
 
