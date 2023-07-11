@@ -22,9 +22,9 @@ https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_
 
 
 ## Budget Limit 
-I put daily budget monitoring max 5 USD, one day I got charge up to 80 USD.
+I put daily budget monitoring max USD 5 and monthly max  USD 20, one day I got charge up to 80 USD.
 
-![image](https://user-images.githubusercontent.com/67248935/218673193-2fa80591-9475-4717-adb2-13ca8317421e.png)
+![Alt text](image-1.png)
 
 ### Create an AWS Budget using CLI
 
@@ -34,16 +34,71 @@ Get your AWS Account ID
 ```sh
 aws sts get-caller-identity --query Account --output text
 ```
+the output will be our AWS account ID as follows
 
-- Supply your AWS Account ID
-- Update the json files
-- This is another case with AWS CLI its just much easier to json files due to lots of nested json
+![Alt text](image.png)
+
+next we are going to deploy our aws budget by using AWS CLI.
 
 ```sh
 aws budgets create-budget \
-    --account-id AccountID \
+    --account-id $AWS_ACCOUNT_ID \
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
+```
+
+content of budget.json file are bolow
+```
+{
+    "BudgetLimit": {
+        "Amount": "20",
+        "Unit": "USD"
+    },
+    "BudgetName": "CruddurBudgetMontly",
+    "BudgetType": "COST",
+    "CostFilters": {
+        "TagKeyValue": [
+            "user:project$cruddur"
+        ]
+    },
+    "CostTypes": {
+        "IncludeCredit": true,
+        "IncludeDiscount": true,
+        "IncludeOtherSubscription": true,
+        "IncludeRecurring": true,
+        "IncludeRefund": true,
+        "IncludeSubscription": true,
+        "IncludeSupport": true,
+        "IncludeTax": true,
+        "IncludeUpfront": true,
+        "UseBlended": false
+    },
+    "TimePeriod": {
+        "Start": 1477958399,
+        "End": 3706473600
+    },
+    "TimeUnit": "MONTHLY"
+  }
+```
+
+content of budget-notifications.json are below
+```
+[
+    {
+        "Notification": {
+            "ComparisonOperator": "GREATER_THAN",
+            "NotificationType": "ACTUAL",
+            "Threshold": 80,
+            "ThresholdType": "PERCENTAGE"
+        },
+        "Subscribers": [
+            {
+                "Address": "ghurafa2821@gmail.com",
+                "SubscriptionType": "EMAIL"
+            }
+        ]
+    }
+]
 ```
 
 ## Add user on IAM
