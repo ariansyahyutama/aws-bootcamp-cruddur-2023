@@ -143,10 +143,10 @@ Check your email and confirm the subscription
 
 #### Create Alarm
 
-- [aws cloudwatch put-metric-alarm](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html)
-- [Create an Alarm via AWS CLI](https://aws.amazon.com/premiumsupport/knowledge-center/cloudwatch-estimatedcharges-alarm/)
-- We need to update the configuration json script with the TopicARN we generated earlier
-- We are just a json file because --metrics is is required for expressions and so its easier to us a JSON file.
+- We need to update the configuration json script with the TopicARN(refer to SNS - topics), replace the alarm action on alaram_config json to the following 
+    `AlarmActions": [
+        "arn:aws:sns:us-east-1:776552123053:billing-alarm"
+    ]`
 
 ```sh
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
