@@ -189,6 +189,8 @@ follwoing are the detail of alarm_config.json
     }]
   }
 ```
+runn alarm config with AWS CLI
+```
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
 
