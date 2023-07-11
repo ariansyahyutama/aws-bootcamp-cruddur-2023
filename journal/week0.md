@@ -143,18 +143,58 @@ Check your email and confirm the subscription
 
 #### Create Alarm
 
-- We need to update the configuration json script with the TopicARN(refer to SNS - topics), replace the alarm action on alaram_config json to the following 
+We need to update the configuration json script with the TopicARN(refer to SNS - topics), replace the alarm action on alaram_config.json to the following 
     `AlarmActions": [
         "arn:aws:sns:us-east-1:776552123053:billing-alarm"
     ]`
 
 ```sh
+
+follwoing are the detail of alarm_config.json
+```
+{
+    "AlarmName": "DailyEstimatedCharges",
+    "AlarmDescription": "This alarm would be triggered if the daily estimated charges exceeds 1$",
+    "ActionsEnabled": true,
+    "AlarmActions": [
+        "arn:aws:sns:us-east-1:776552123053:billing-alarm"
+    ],
+    "EvaluationPeriods": 1,
+    "DatapointsToAlarm": 1,
+    "Threshold": 5,
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "TreatMissingData": "breaching",
+    "Metrics": [{
+        "Id": "m1",
+        "MetricStat": {
+            "Metric": {
+                "Namespace": "AWS/Billing",
+                "MetricName": "EstimatedCharges",
+                "Dimensions": [{
+                    "Name": "Currency",
+                    "Value": "USD"
+                }]
+            },
+            "Period": 86400,
+            "Stat": "Maximum"
+        },
+        "ReturnData": false
+    },
+    {
+        "Id": "e1",
+        "Expression": "IF(RATE(m1)>0,RATE(m1)*86400,0)",
+        "Label": "DailyEstimatedCharges",
+        "ReturnData": true
+    }]
+  }
+```
 aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
 ```
 
 ![image](https://user-images.githubusercontent.com/67248935/219821757-d72cc97e-246c-4115-9824-0473d2efb5a0.png)
 
-
+### AWS Organization 
+![Alt text](image-2.png)
 
 
 
