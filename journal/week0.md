@@ -24,7 +24,8 @@ https://lucid.app/lucidchart/3c298bb3-1036-4996-8ee2-f5ae08e54a1b/edit?viewport_
 ## Budget Limit 
 I put daily budget monitoring max USD 5 and monthly max  USD 20, one day I got charge up to 80 USD.
 
-![Alt text](image-1.png)
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/6ab254dd-9201-457f-be10-c06fda139acd)
+
 
 ### Create an AWS Budget using CLI
 
