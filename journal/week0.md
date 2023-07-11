@@ -197,7 +197,8 @@ aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.js
 ### AWS Organization 
 most people will create prod, dev, stg account but here I just want to create an example about multi account
 
-![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/4553bf73-9918-4076-8f5b-50de565084ea)
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/0ffe992e-1950-40df-bf61-d49233a54b7c)
+
 
 
 
