@@ -7,6 +7,7 @@ in this week-0,
 * setting budget and alarm
 * 
 ## Conceptual Design
+I should not put a specific service in the conceptual design, general infomation for example Storage, Authentication or CDN should be good.
 ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/3b4b94d7-266b-4eb7-b878-8082bab1d71b)
 
 ## Logical Design
