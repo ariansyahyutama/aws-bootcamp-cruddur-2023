@@ -183,13 +183,14 @@ aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
 
 [Github aws-xray-daemon](https://github.com/aws/aws-xray-daemon)
 [X-Ray Docker Compose example](https://github.com/marjamis/xray/blob/master/docker-compose.yml)
-
+following images are evidence of  X-ray trace in AWS console
+[1]
 <img width="1543" alt="image" src="https://user-images.githubusercontent.com/67248935/222885868-92d4c7fc-529d-4b3e-b1f3-0120a13dce3a.png">
-
+[2]
 <img width="1425" alt="image" src="https://user-images.githubusercontent.com/67248935/222885903-6007fa57-b0c3-4349-abe8-abf306c15e7b.png">
-
+[3]
 <img width="1349" alt="image" src="https://user-images.githubusercontent.com/67248935/222915026-e12c78b8-162a-4f60-ba1f-422395a2c1f8.png">
-
+[4]
 <img width="1626" alt="image" src="https://user-images.githubusercontent.com/67248935/222955863-7b18c910-85bd-4afc-9455-6f95856c9c1d.png">
 
 
