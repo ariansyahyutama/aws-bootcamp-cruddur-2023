@@ -344,6 +344,7 @@ def rollbar_test():
     rollbar.report_message('Hello World!', 'warning')
     return "Hello World!"
 ```
+[1]
 
 <img width="1312" alt="image" src="https://user-images.githubusercontent.com/67248935/223162011-ff079533-d077-42a9-ae5f-b88674436cfd.png">
 
@@ -352,11 +353,16 @@ def rollbar_test():
 [Rollbar Flask Example](https://github.com/rollbar/rollbar-flask-example/blob/master/hello.py)
 
 following imgages are evidence of activating rollbar
-[1]
-<img width="1298" alt="image" src="https://user-images.githubusercontent.com/67248935/223163453-23baf50b-b136-4e77-8267-12592d45ae3c.png">
+
 [2]
-<img width="784" alt="image" src="https://user-images.githubusercontent.com/67248935/223164079-1b35aed2-ec67-40d5-88f7-bf2c6dbd358e.png">
+
+<img width="1298" alt="image" src="https://user-images.githubusercontent.com/67248935/223163453-23baf50b-b136-4e77-8267-12592d45ae3c.png>
+
 [3]
+<img width="784" alt="image" src="https://user-images.githubusercontent.com/67248935/223164079-1b35aed2-ec67-40d5-88f7-bf2c6dbd358e.png">
+
+[4]
+
 <img width="1524" alt="image" src="https://user-images.githubusercontent.com/67248935/223369557-8d290483-47c0-45ff-8afc-ba39c162b835.png">
 
 
