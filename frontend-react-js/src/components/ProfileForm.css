@@ -33,6 +33,12 @@ form.profile_form textarea {
   height: 140px;
 }
 
+
+.profile_popup .upload {
+  color: white;
+  background: green;
+}
+
 form.profile_form input[type='text']:hover,
 form.profile_form textarea:focus {
   border: solid 1px var(--field-border-focus)
