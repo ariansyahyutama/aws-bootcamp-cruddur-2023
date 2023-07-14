@@ -156,7 +156,90 @@ VALUES
   )
 ```
 
-I am seeding data to the prod by running `./bin/ddb/seed-data prod` , so following are the seeded data 
+I seed the data to the prod instead local dynamo-db by running `./bin/ddb/seed-data prod` , so following are the seeded data 
 ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/4c943710-abc1-4f52-b334-5520e03d98f7)
 
-   
+there are several account registered in my AWS Cognito with handle ariansyahy and lando
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/47522d72-8c2e-4cd1-ab9c-d921a30e9170)
+
+
+## Implementing DynamoDB Streams
+- run ```./schema-load prod``` 
+- we can check in the dynamodb table now, we created 'cruddur-messages' as a table name
+  ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/ae296890-1ff7-4eeb-a0ed-de25aad13bf0)
+
+- click the table and go to 'Exports and Streams' and 'Turn On' button
+- choose 'New Image', 'Turn on stream' and we have created DynamoDB stream
+- we created VPC Endpoint to DynamoDB, so the traffic will not go publicly
+  ![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/f32a6c25-2c19-443c-9a32-a203e8b2aaf1)
+
+- we created Lambda function that will insert a message into conversation via DynamoDB stream
+- click the table and go to 'Exports and Streams' and 'creeate trigger' button, following are the lambda function codes
+  ```
+  import json
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
+
+dynamodb = boto3.resource(
+ 'dynamodb',
+ region_name='us-east-1',
+ endpoint_url="http://dynamodb.us-east-1.amazonaws.com"
+)
+
+def lambda_handler(event, context):
+  print('event-data',event)
+
+  eventName = event['Records'][0]['eventName']
+  if (eventName == 'REMOVE'):
+    print("skip REMOVE event")
+    return
+  pk = event['Records'][0]['dynamodb']['Keys']['pk']['S']
+  sk = event['Records'][0]['dynamodb']['Keys']['sk']['S']
+  if pk.startswith('MSG#'):
+    group_uuid = pk.replace("MSG#","")
+    message = event['Records'][0]['dynamodb']['NewImage']['message']['S']
+    print("GRUP ===>",group_uuid,message)
+
+    table_name = 'cruddur-messages'
+    index_name = 'message-group-sk-index'
+    table = dynamodb.Table(table_name)
+    data = table.query(
+      IndexName=index_name,
+      KeyConditionExpression=Key('message_group_uuid').eq(group_uuid)
+    )
+    print("RESP ===>",data['Items'])
+
+    # recreate the message group rows with new SK value
+    for i in data['Items']:
+      delete_item = table.delete_item(Key={'pk': i['pk'], 'sk': i['sk']})
+      print("DELETE ===>",delete_item)
+
+      response = table.put_item(
+        Item={
+          'pk': i['pk'],
+          'sk': sk,
+          'message_group_uuid':i['message_group_uuid'],
+          'message':message,
+          'user_display_name': i['user_display_name'],
+          'user_handle': i['user_handle'],
+          'user_uuid': i['user_uuid']
+        }
+      )
+      print("CREATE ===>",response)
+  ```
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/a2d0b421-3df6-49ae-9432-02d1b8c75f54)
+
+  - we enabled execution role
+
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/6672f937-e7d0-4609-b3ef-d72691efc3ae)
+
+- we enabled VPC
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/750def16-0bb1-4316-a0c4-9468394e66b4)
+
+- in the we should use dynamodb table to connect our backend
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/4c943710-abc1-4f52-b334-5520e03d98f7)
+
+
+
+
+
