@@ -44,13 +44,13 @@ tasks:
   #    ./serverless/build
 
 
-  #- name: cdk
-  #  before: |
-  #    cd thumbing-serverlsess-cdk 
-  #    cp .env.example .env
-  #    npm i
-  #    npm install aws-cdk -g
-  #    npm i dotenv
+  - name: cdk
+    before: |
+      cd thumbing-serverlsess-cdk 
+      cp .env.example .env
+      npm i
+      npm install aws-cdk -g
+      npm i dotenv
   
 
 vscode:
