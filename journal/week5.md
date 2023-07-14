@@ -155,4 +155,8 @@ VALUES
     current_timestamp + interval '10 day'
   )
 ```
+
+I am seeding data to the prod by running `./bin/ddb/seed-data prod` , so following are the seeded data 
+![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/4c943710-abc1-4f52-b334-5520e03d98f7)
+
    
