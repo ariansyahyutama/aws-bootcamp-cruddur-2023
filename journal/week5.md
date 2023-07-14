@@ -174,7 +174,7 @@ there are several accounts registered in my AWS Cognito with handles ariansyahy 
   
 - click the table and go to 'Exports and Streams' and 'create trigger' button; following are the lambda function codes
 
-- in the end, we should use dynamodb table to connect our backend
+- in the end, we are expcted to use AWS dynamodb table instead the local one to connect our backend
 
 
 
