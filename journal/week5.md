@@ -175,6 +175,7 @@ there are several accounts registered in my AWS Cognito with handles ariansyahy 
 
 - we created a Lambda function that will insert a message into the conversation via the DynamoDB stream
 - click the table and go to 'Exports and Streams' and 'create trigger' button; following are the lambda function codes
+
   ```
   import json
 import boto3
@@ -227,14 +228,6 @@ def lambda_handler(event, context):
       )
       print("CREATE ===>",response)
   ```
-![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/a2d0b421-3df6-49ae-9432-02d1b8c75f54)
-
-  - we enabled the  execution role
-
-![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/6672f937-e7d0-4609-b3ef-d72691efc3ae)
-
-- we enabled VPC
-![image](https://github.com/ariansyahyutama/aws-bootcamp-cruddur-2023/assets/67248935/750def16-0bb1-4316-a0c4-9468394e66b4)
 
 - in the end, we should use dynamodb table to connect our backend
 
