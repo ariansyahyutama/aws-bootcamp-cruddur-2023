@@ -46,7 +46,7 @@ tasks:
 
   - name: cdk
     before: |
-      cd thumbing-serverlsess-cdk 
+      cd thumbing-serverless-cdk 
       cp .env.example .env
       npm i
       npm install aws-cdk -g
