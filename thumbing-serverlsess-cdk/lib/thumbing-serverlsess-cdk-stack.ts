@@ -34,7 +34,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     const uploadsBucket = this.createBucket(uploadsBucketName);
     const bucket = this.importBucket(bucketName); //this.createBucket(bucketName);
 
-    //const lambda = this.createLambda(functionPath, uploadsBucketName, bucketName, folderInput, folderOutput); //enable
+    const lambda = this.createLambda(functionPath, uploadsBucketName, bucketName, folderInput, folderOutput); //enable
 
     //this.createS3NotifyToLambda(folderInput,lambda,bucket);
 
@@ -42,15 +42,15 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     const s3ReadWritePolicyUpload = this.createPolicyBucketAccess(uploadsBucket.bucketArn)
 
 
-    //lambda.addToRolePolicy(s3ReadWritePolicy); //enable
-    //lambda.addToRolePolicy(s3ReadWritePolicyUpload); //enable
+    lambda.addToRolePolicy(s3ReadWritePolicy); //enable
+    lambda.addToRolePolicy(s3ReadWritePolicyUpload); //enable
 
     // create sns topic and subscription
     const snsTopic = this.createSnsTopic(topicName)
     this.createSnsSubscription(snsTopic,webhookUrl)
 
     //Add S3 event notifications
-    //this.createS3NotifyToLambda(folderInput,lambda,bucket) //ENABLE LATER IF REQUIRED
+    this.createS3NotifyToLambda(folderInput,lambda,bucket) //ENABLE LATER IF REQUIRED
    
 
   }
@@ -81,7 +81,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     return bucket
   }
 
-  /*
+  
   createLambda(functionPath:string, uploadsBucketName:string, bucketName:string, folderInput:string, folderOutput:string): lambda.IFunction {
 
     const lambdaFunction = new lambda.Function(this, 'ThumbLambda', {
@@ -98,16 +98,16 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     })
     return lambdaFunction;
   }
-  */
+  
 
-  //createS3NotifyToLambda(prefix: string, lambda: lambda.IFunction, bucket: s3.IBucket): void {
-  //  const destination = new s3n.LambdaDestination(lambda);
-  //  bucket.addEventNotification(
-  //   s3.EventType.OBJECT_CREATED_PUT,
-  //   destination,
-  //   //{prefix: prefix} // folder to contain the original images 
-  //  )
-  //}
+  createS3NotifyToLambda(prefix: string, lambda: lambda.IFunction, bucket: s3.IBucket): void {
+    const destination = new s3n.LambdaDestination(lambda);
+    bucket.addEventNotification(
+     s3.EventType.OBJECT_CREATED_PUT,
+     destination,
+     //{prefix: prefix} // folder to contain the original images 
+    )
+  }
 
   createSnsTopic(topicName: string): sns.ITopic{
     const logicalName = "ThumbingTopic";
