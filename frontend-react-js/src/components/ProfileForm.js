@@ -16,11 +16,11 @@ export default function ProfileForm(props) {
   const s3uploadkey = async (event)=> {
     try {
       console.log('s3upload')
-      const backend_url = "https://clbx5fa2yb.execute-api.ca-central-1.amazonaws.com/avatars/key_upload"
+      const backend_url = "https://79qezmh6s3.execute-api.us-east-1.amazonaws.com/avatars/key_upload"
       await getAccessToken()
       const access_token = localStorage.getItem("access_token")
       const res = await fetch(backend_url, {
-        method: "POST",
+        method: "GET",
         headers: {
           'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/json',
@@ -49,7 +49,7 @@ export default function ProfileForm(props) {
 
     try {
       console.log('s3upload')
-      const backend_url = ""
+      const backend_url = "https://cruddur-uploaded-avatars-ghuronline-2.s3.amazonaws.com/mock.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3JTQ5BKWVIGXHHO4%2F20230720%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230720T143629Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=9cb4811e408c212652a71b106c79cd26d1df766f32b507c53cbe3498896c5fa6"
       const res = await fetch(backend_url, {
         method: "PUT",
         body: file,
