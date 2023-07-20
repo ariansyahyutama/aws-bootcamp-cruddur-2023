@@ -71,7 +71,8 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
   createBucket(bucketName: string): s3.IBucket {
     const bucket = new s3.Bucket(this, 'UploadsBucket', {
       bucketName: bucketName,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true
     });
     return bucket;
   }
