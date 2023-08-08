@@ -34,7 +34,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     const uploadsBucket = this.createBucket(uploadsBucketName);
     const bucket = this.importBucket(bucketName); //this.createBucket(bucketName);
 
-    const lambda = this.createLambda(functionPath, uploadsBucketName, bucketName, folderInput, folderOutput);
+    const lambda = this.createLambda(functionPath, uploadsBucketName, bucketName, folderInput, folderOutput); //enable
 
     //this.createS3NotifyToLambda(folderInput,lambda,bucket);
 
@@ -42,16 +42,16 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     const s3ReadWritePolicyUpload = this.createPolicyBucketAccess(uploadsBucket.bucketArn)
 
 
-    lambda.addToRolePolicy(s3ReadWritePolicy);
-    lambda.addToRolePolicy(s3ReadWritePolicyUpload);
+    lambda.addToRolePolicy(s3ReadWritePolicy); //enable
+    lambda.addToRolePolicy(s3ReadWritePolicyUpload); //enable
 
     // create sns topic and subscription
     const snsTopic = this.createSnsTopic(topicName)
     this.createSnsSubscription(snsTopic,webhookUrl)
 
     //Add S3 event notifications
-    this.createS3NotifyToLambda(folderInput,lambda,bucket)
-    //this.createS3NotifyToSns(folderOutput,snsTopic,bucket)
+    this.createS3NotifyToLambda(folderInput,lambda,bucket) //ENABLE LATER IF REQUIRED
+   
 
   }
 
@@ -71,7 +71,8 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
   createBucket(bucketName: string): s3.IBucket {
     const bucket = new s3.Bucket(this, 'UploadsBucket', {
       bucketName: bucketName,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true
     });
     return bucket;
   }
@@ -81,7 +82,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     return bucket
   }
 
-
+  
   createLambda(functionPath:string, uploadsBucketName:string, bucketName:string, folderInput:string, folderOutput:string): lambda.IFunction {
 
     const lambdaFunction = new lambda.Function(this, 'ThumbLambda', {
@@ -98,6 +99,7 @@ export class ThumbingServerlsessCdkStack extends cdk.Stack {
     })
     return lambdaFunction;
   }
+  
 
   createS3NotifyToLambda(prefix: string, lambda: lambda.IFunction, bucket: s3.IBucket): void {
     const destination = new s3n.LambdaDestination(lambda);

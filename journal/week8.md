@@ -1,55 +1,25 @@
 I COPIED FROM ANNLEEFORES, DO IT ONLY FOR LEARNING PURPOSE DUE TO I HAVE LIMITED TIME TO JOURNAL WHILE I REALLY WANT TO FINISH THE PROJECT FIRST. SORRY FOR THAT 
 
-# Week 8 — Serverless Image Processing
-
-## [Required Homework](#required-homework-1)
-
-- [Implement CDK Stack](#what-is-cdk)
-- [Serve Avatars via CloudFront](#serving-avatars-via-cloudfront)
-- [Implement Users Profile Page](#implement-users-profile-page)
-- [Implement Users Profile Form](#implement-users-profile-page)
-- [Implement Backend Migrations](#implement-migrations-backend-endpoint-and-profile-form)
-- [Presigned URL generation via Ruby Lambda](#implement-avatar-uploading)
-- [HTTP API Gateway with Lambda Authorizer](#implement-avatar-uploading)
-- [Create JWT Lambda Layer](#fix-cors-aws-lambda)
-- [Render Avatars in App via CloudFront](#render-avatar-from-cloudfront)
-
-## [Homework Challenges](#homework-challenges-1)
-
-- [Passing the JWT sub from Authorizer Lambda to CruddurAvatarUpload Lambda](#passing-the-jwt-sub-from-authorizer-lambda-to-crudduravatarupload-lambda)
-
-## Required Homework
-
-### What is CDK?
-
-CDK (Cloud Development Kit) is an Infrastructure as Code (IaC) tool owned by AWS that allows users to define infrastructure or cloud resources in their programming language of choice. CDK synth converts CDK to CloudFormation templates, and it is built on top of CFN. It supports TypeScript, Python, Java, .NET, and Go. CDK constructs are the basic building blocks of AWS CDK apps, and they encapsulate everything AWS CloudFormation needs to create the component. There are L1, L2, and L3 constructs, with L3 being the most complex. CFN knowledge is helpful but not necessary. CDK can be used with other IaC tools like AWS SAM, Terraform, and Kubernetes. CDK is good for minimizing CFN code. The CDK base library is written in TypeScript and uses jsii to convert the library for other languages. There are resources available to get started with CDK, such as the [official getting started guide](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html), CDK book, [constructs.dev](https://constructs.dev/), and [cdkpatterns.com](http://cdkpatterns.com/)
 
 - create a directory 'thumbing-serverless-cdk' in backend 
 
 ### Bootstrap
 
-The Bootstrap process is necessary to provision AWS resources before deploying CDK apps. Each region needs to be bootstrapped to your account. To do this, run
 
 ```bash
 cdk bootstrap aws://ACCOUNT-NUMBER-1/REGION-1
 ```
 
 ```bash
+gitpod /workspace/aws-bootcamp-cruddur-2023/thumbing-serverlsess-cdk (week8) $ cdk bootstrap aws://7765zxyz3053/us-east-1
+ ⏳  Bootstrapping environment aws://7765zxyz3053/us-east-1...
 Trusted accounts for deployment: (none)
 Trusted accounts for lookup: (none)
 Using default execution policy of 'arn:aws:iam::aws:policy/AdministratorAccess'. Pass '--cloudformation-execution-policies' to customize.
 CDKToolkit: creating CloudFormation changeset...
-[··························································] (0/12)
-
-10:40:58 AM | CREATE_IN_PROGRESS   | AWS::CloudFormation::Stack | CDKToolkit
-..............................
-..............................
-..............................
+ ✅  Environment aws://7765zxyz3053/us-east-1 bootstrapped.
 ```
 
-It's essential not to delete the CDKToolkit from the CloudFormation stack, which also creates a bucket and an ECR repository.
-
-Official documentation: [Bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
 
 ### Implementing S3 for Serverless Avatar Image Processing
 
