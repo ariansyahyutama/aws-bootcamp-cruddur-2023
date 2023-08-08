@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  Setup Ecs Cluster
+Resources:
+  ECSCluster: #logical name
+    Type: 'AWS::ECS::Cluster'
+# IGW
+# Route Tables
+# Subnets
+# Subnet A
+# Subnet B
+# Subnet C
