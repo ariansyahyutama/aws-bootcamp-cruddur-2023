@@ -4,6 +4,8 @@ Description: |
 Resources:
   ECSCluster: #logical name
     Type: 'AWS::ECS::Cluster'
+    Properties:
+      ClusterName: MyCluster
 # IGW
 # Route Tables
 # Subnets
