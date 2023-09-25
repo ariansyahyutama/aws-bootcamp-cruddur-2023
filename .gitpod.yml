@@ -35,6 +35,7 @@ tasks:
   - name: cfn
     before: |
       pip install cfn-lint
+      cargo install cfn-guard
   #- name: sharp and clients3
   #  command: |
   #    cd aws/lambda/process-images
