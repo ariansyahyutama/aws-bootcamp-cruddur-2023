@@ -6,6 +6,7 @@ Resources:
     Type: 'AWS::ECS::Cluster'
     Properties:
       ClusterName: MyCluster
+      CapacityProviders: ["NEARGATE"]
 # IGW
 # Route Tables
 # Subnets

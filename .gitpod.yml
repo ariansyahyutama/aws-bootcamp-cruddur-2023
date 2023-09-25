@@ -32,6 +32,9 @@ tasks:
       sudo dpkg -i session-manager-plugin.deb
       cd backend-flask
 
+  - name: cfn
+    before: |
+      pip install cfn-lint
   #- name: sharp and clients3
   #  command: |
   #    cd aws/lambda/process-images
