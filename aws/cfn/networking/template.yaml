@@ -9,5 +9,46 @@ Resources:
       EnableDnsHostnames: true
       InstanceTenancy: default
       Tags:
-      - Key: stack
-        Value: production
+      - Key: Name
+        Value: cruddurVPC
+  
+  IGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: CruddurIGW
+
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      InternetGatewayId: !Ref IGW
+      VpcId: !Ref VPC
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: cruddurRT
+
+  RouteToIGW:
+    Type: AWS::EC2::Route
+    DependsOn: AttachIGW
+    Properties:      
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref IGW
+      RouteTableId: !Ref RouteTable
+  
+  RouteToLocal:
+    Type: AWS::EC2::Route
+    DependsOn: AttachIGW
+    Properties:      
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 10.0.0.0/16
+      GatewayId: "local"
+
+
+
+
