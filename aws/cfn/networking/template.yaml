@@ -128,4 +128,41 @@ Resources:
           Value: CruddurSubnetPriC
       VpcId: !Ref VPC
 
+  SubnetPub1RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PubSubnetA
+      RouteTableId: !Ref RouteTable
+
+  SubnetPub2RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PubSubnetB
+      RouteTableId: !Ref RouteTable
+  
+  SubnetPub3RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PubSubnetC
+      RouteTableId: !Ref RouteTable
+
+  SubnetPub1RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PriSubnetA
+      RouteTableId: !Ref RouteTable
+
+  SubnetPub1RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PriSubnetB
+      RouteTableId: !Ref RouteTable
+
+  SubnetPub1RTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PriSubnetC
+      RouteTableId: !Ref RouteTable
+
+
 
