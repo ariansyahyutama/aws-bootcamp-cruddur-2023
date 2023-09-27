@@ -1,23 +1,47 @@
 AWSTemplateFormatVersion: 2010-09-09
 
+Parameters:
+  Az1:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1a
+  Az2:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1b
+  Az3:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1c
+  VPCCidrBlock:
+    Type: String
+    Default: "10.0.0.0/16"
+
+  SubnetCidrBlocks:
+    Type: CommaDelimitedList
+    Default: >
+      10.0.0.0/22,
+      10.0.4.0/22,
+      10.0.8.0/22,
+      10.0.12.0/22,
+      10.0.16.0/22,
+      10.0.20.0/22
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 10.0.0.0/16
+      CidrBlock: !Ref VPCCidrBlock
       EnableDnsSupport: true
       EnableDnsHostnames: true
       InstanceTenancy: default
       Tags:
       - Key: Name
-        Value: cruddurVPC
+        Value: !Sub "${AWS::StackName}VPC"
   
   IGW:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: CruddurIGW
+          Value: !Sub "${AWS::StackName}IGW"
 
   AttachIGW:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -31,7 +55,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: cruddurRT
+        Value: !Sub "${AWS::StackName}RT"
 
   RouteToIGW:
     Type: AWS::EC2::Route
@@ -52,80 +76,74 @@ Resources:
   PubSubnetA:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: 
-      CidrBlock: 10.0.0.0/22
+      AvailabilityZone: !Ref Az1
+      CidrBlock: !Select [0, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPubA
+          Value: !Sub "${AWS::StackName}SubnetPub1"
       VpcId: !Ref VPC
   
   PubSubnetB:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: 
-      CidrBlock: 10.0.4.0/22
+      AvailabilityZone: !Ref Az2
+      CidrBlock: !Select [1, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPubA
+          Value: !Sub "${AWS::StackName}SubnetPub2"
       VpcId: !Ref VPC
 
   PubSubnetC:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: 
-      CidrBlock: 10.0.8.0/22
+      AvailabilityZone: !Ref Az3
+      CidrBlock: !Select [2, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPubc
+          Value: !Sub "${AWS::StackName}SubnetPub3"
       VpcId: !Ref VPC
 
   PriSubnetA:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: us-east-1a
-      CidrBlock: 10.0.16.0/22
+      AvailabilityZone: !Ref Az1
+      CidrBlock: !Select [3, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPriA
+          Value: !Sub "${AWS::StackName}SubnetPriv1"
       VpcId: !Ref VPC
 
 
   PriSubnetB:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: us-east-1b
-      CidrBlock: 10.0.20.0/22
+      AvailabilityZone: !Ref Az2
+      CidrBlock: !Select [4, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPriB
+          Value: !Sub "${AWS::StackName}SubnetPriv2"
       VpcId: !Ref VPC
 
   PriSubnetC:
     Type: AWS::EC2::Subnet
     Properties: 
-      AssignIpv6AddressOnCreation: false
-      AvailabilityZone: us-east-1c
-      CidrBlock: 10.0.24.0/22
+      AvailabilityZone: !Ref Az3
+      CidrBlock: !Select [5, !Ref SubnetCidrBlocks]
       EnableDns64: false
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name
-          Value: CruddurSubnetPriC
+          Value: !Sub "${AWS::StackName}SubnetPriv3"
       VpcId: !Ref VPC
 
   SubnetPub1RTAssociation:
@@ -163,6 +181,20 @@ Resources:
     Properties:
       SubnetId: !Ref PriSubnetC
       RouteTableId: !Ref RouteTable
+
+Outputs:
+  VpcId:
+    Value: !Ref VPC
+    Export:
+      Name: VpcId
+  VpcCidrBlock:
+    Value: !GetAtt VPC.CidrBlock
+    Export:
+      Name: VPCCidrBlock
+  SubnetCidrBlocks:
+    Value: !Ref SubnetCidrBlocks
+    Export:
+      Name: SubnetCidrBlocks
 
 
 
