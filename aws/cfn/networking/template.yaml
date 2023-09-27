@@ -192,9 +192,34 @@ Outputs:
     Export:
       Name: VPCCidrBlock
   SubnetCidrBlocks:
-    Value: !Ref SubnetCidrBlocks
+    Value: !Join [",", !Ref SubnetCidrBlocks]
     Export:
       Name: SubnetCidrBlocks
+  PublicSubnetIds:
+    Value: !Join 
+      - ","
+      - - !Ref PubSubnetA
+        - !Ref PubSubnetB
+        - !Ref PubSubnetC
+    Export:
+      Name: !Sub "${AWS::StackName}PublicSubnetIds"
+  PrivateSubnetIds:
+    Value: !Join 
+      - ","
+      - - !Ref PriSubnetA
+        - !Ref PriSubnetB
+        - !Ref PriSubnetC
+    Export:
+      Name: !Sub "${AWS::StackName}PrivateSubnetIds"
+  AvailabilityZones:
+    Value: !Join 
+      - ","
+      - - !Ref Az1
+        - !Ref Az2
+        - !Ref Az3
+    Export:
+      Name: !Sub "${AWS::StackName}AvailabilityZones"
+
 
 
 
