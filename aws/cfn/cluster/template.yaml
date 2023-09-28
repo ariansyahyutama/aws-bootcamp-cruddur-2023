@@ -2,8 +2,55 @@ AWSTemplateFormatVersion: 2010-09-09
 
 #Parameters:
  
-#Resources:
-
+Resources:
+  FargateCluster:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-cluster.html
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub "${AWS::StackName}FargateCluster"
+      CapacityProviders:
+        - FARGATE
+      ClusterSettings:
+        - Name: containerInsights
+          Value: enabled
+      Configuration:
+        ExecuteCommandConfiguration:
+          # KmsKeyId: !Ref KmsKeyId
+          Logging: DEFAULT
+      ServiceConnectDefaults:
+        Namespace: cruddur
+  ALB:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-loadbalancer.html
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties: 
+      Name: !Sub "${AWS::StackName}ALB"
+      Type: application
+      IpAddressType: ipv4
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-loadbalancer-loadbalancerattributes.html
+      Scheme: internet-facing
+      SecurityGroups:
+        - !GetAtt ALBSG.GroupId
+      Subnets:
+        Fn::Split:
+          - ","
+          - Fn::ImportValue:
+              !Sub "${NetworkingStack}PublicSubnetIds"
+      LoadBalancerAttributes:
+        - Key: routing.http2.enabled
+          Value: true
+        - Key: routing.http.preserve_host_header.enabled
+          Value: false
+        - Key: deletion_protection.enabled
+          Value: true
+        - Key: load_balancing.cross_zone.enabled
+          Value: true
+        - Key: access_logs.s3.enabled
+          Value: false
+        # In-case we want to turn on logs
+        # - Name: access_logs.s3.bucket
+        #   Value: bucket-name
+        # - Name: access_logs.s3.prefix
+        #   Value: ""
 
 #Outputs:
  
