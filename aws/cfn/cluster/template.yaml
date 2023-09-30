@@ -90,12 +90,49 @@ Resources:
         - Field: host-header
           HostHeaderConfig: 
             Values: 
-              - api.cruddur.com
+              - api.ghur.online
       Actions: 
         - Type: forward
           TargetGroupArn:  !Ref BackendTG
       ListenerArn: !Ref HTTPSListener
       Priority: 1
+
+  ALBSG:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub "${AWS::StackName}AlbSG"
+      GroupDescription: Public Facing SG for our Cruddur ALB
+      #VpcId:
+      #  Fn::ImportValue:
+      #    !Sub ${NetworkingStack}VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTPS
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTP
+  # We have to create this SG before the service so we can pass it to database SG
+  ServiceSG:
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub "${AWS::StackName}ServSG"
+      GroupDescription: Security for Fargate Services for Cruddur
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${NetworkingStack}VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !GetAtt ALBSG.GroupId
+          FromPort: !Ref BackendPort
+          ToPort: !Ref BackendPort
+          Description: ALB HTTP
 
 #Outputs:
  
